@@ -1,0 +1,519 @@
+﻿@page "/Team"
+@layout PagesLayout
+<style>
+    :root {
+        --primary-color: #1957a6;
+        --primary-light: #2c6bc9;
+        --primary-dark: #174c91;
+        --secondary-color: #d3612f;
+        --secondary-light: #e67e4c;
+        --accent-color: #e8f0ed;
+        --gold: #d4af37;
+        --light-gold: #f0e6c9;
+        --light-bg: #f8f9fa;
+        --dark-bg: #2c3e50;
+        --text-dark: #2c3e50;
+        --text-medium: #546e7a;
+        --text-light: white;
+        --border-radius: 6px;
+        --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: var(--transition);
+    }
+
+    body {
+        background-color: var(--light-bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+        font-family: "Montserrat", sans-serif;
+        color: var(--text-dark);
+    }
+
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+    }
+
+    /* Creative Hero Section */
+    .hero-section {
+        position: relative;
+        padding: 120px 0 100px;
+        background-color: white;
+        overflow: hidden;
+    }
+
+    .hero-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle at 20% 30%, rgba(25, 87, 166, 0.05) 0%, transparent 8%), radial-gradient(circle at 80% 40%, rgba(25, 87, 166, 0.05) 0%, transparent 8%), radial-gradient(circle at 40% 80%, rgba(25, 87, 166, 0.05) 0%, transparent 8%), radial-gradient(circle at 70% 90%, rgba(25, 87, 166, 0.05) 0%, transparent 8%);
+        background-size: 120% 120%;
+        opacity: 0.8;
+    }
+
+    .hero-accent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary-color), var(--primary-light), var(--primary-color));
+        background-size: 200% 100%;
+        animation: gradient-shift 8s ease infinite;
+    }
+
+
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+    }
+
+    .hero-subtitle-top {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        font-size: 0.9em;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        display: inline-block;
+        position: relative;
+        padding-left: 40px;
+    }
+
+        .hero-subtitle-top::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 30px;
+            height: 1px;
+            background-color: var(--primary-color);
+        }
+
+    .hero-title {
+        font-weight: 700;
+        font-size: 3.5em;
+        line-height: 1.1;
+        margin-bottom: 25px;
+        color: var(--text-dark);
+        position: relative;
+    }
+
+        .hero-title span {
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+            .hero-title span::after {
+                content: "";
+                position: absolute;
+                bottom: 5px;
+                left: 0;
+                width: 100%;
+                height: 8px;
+                background-color: var(--light-gold);
+                z-index: -1;
+            }
+
+    .hero-subtitle {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+        font-size: 1.1em;
+        line-height: 1.7;
+        color: var(--text-medium);
+        max-width: 600px;
+        margin-bottom: 40px;
+    }
+
+    .hero-decoration {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 300px;
+        height: 300px;
+        border: 15px solid rgba(25, 87, 166, 0.05);
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+        .hero-decoration::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            border: 2px solid rgba(25, 87, 166, 0.1);
+            border-radius: 50%;
+        }
+
+    /* Team Section */
+    .team-section {
+        padding: 80px 0;
+        position: relative;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+        position: relative;
+    }
+
+    .section-subtitle {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        font-size: 0.9em;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+    }
+
+    .section-title {
+        font-weight: 700;
+        font-size: 2.2em;
+        color: var(--text-dark);
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+    }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+    .section-description {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+        font-size: 1em;
+        color: var(--text-medium);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.7;
+    }
+
+    /* Leadership Team */
+    .leadership-team {
+        margin-bottom: 80px;
+        position: relative;
+    }
+
+        .leadership-team::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(25, 87, 166, 0.1), transparent);
+        }
+
+    .team-row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 40px;
+        margin-bottom: 60px;
+        position: relative;
+    }
+
+        .team-row:last-child {
+            margin-bottom: 0;
+        }
+
+    /* Team Member Card */
+    .team-member {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        width: 100%;
+        max-width: 320px;
+        position: relative;
+    }
+
+        .team-member:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+    .member-image {
+        width: 100%;
+        height: 350px;
+        overflow: hidden;
+        position: relative;
+    }
+
+        .member-image::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 70%, rgba(0, 0, 0, 0.4));
+        }
+
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+    .team-member:hover .member-image img {
+        transform: scale(1.08);
+    }
+
+    .member-info {
+        padding: 25px;
+        text-align: center;
+        position: relative;
+    }
+
+        .member-info::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+
+    .member-name {
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+        font-size: 1.4em;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+    }
+
+    .member-position {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        font-size: 0.9em;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        letter-spacing: 0.5px;
+    }
+
+    /* Team Grid */
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 30px;
+        position: relative;
+    }
+
+        .team-grid .team-member {
+            max-width: none;
+        }
+
+        .team-grid .member-image {
+            height: 280px;
+        }
+
+    /* Decorative Elements */
+    .decoration-circle {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background-color: rgba(25, 87, 166, 0.03);
+        z-index: -1;
+    }
+
+    .decoration-circle-1 {
+        top: -150px;
+        left: -150px;
+    }
+
+    .decoration-circle-2 {
+        bottom: -100px;
+        right: -150px;
+    }
+</style>
+<section class="hero-section">
+    <div class="hero-pattern"></div>
+    <div class="hero-accent"></div>
+    <div class="hero-decoration"></div>
+    <div class="container">
+        <div class="hero-content">
+            <span class="hero-subtitle-top">Rencontrez Notre Équipe</span>
+            <h1 class="hero-title">Les visages derrière notre <span>mission</span></h1>
+            <p class="hero-subtitle">Une équipe passionnée et dévouée travaillant sans relâche pour protéger et assister les réfugiés et demandeurs d'asile au Maroc.</p>
+        </div>
+    </div>
+</section>
+
+<section class="team-section">
+    <div class="decoration-circle decoration-circle-1"></div>
+    <div class="decoration-circle decoration-circle-2"></div>
+    <div class="container">
+        <div class="leadership-team">
+            <div class="section-header">
+                <span class="section-subtitle">Leadership</span>
+                <h2 class="section-title">Notre Leadership</h2>
+                <p class="section-description">L'équipe de direction qui guide notre organisation avec vision et détermination.</p>
+            </div>
+
+
+            <div class="team-row">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=350&width=320">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Noufal Al-Baamari</h3>
+                        <p class="member-position">Président</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-row">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=350&width=320" alt="Ahmed Moufid">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Ahmed Moufid</h3>
+                        <p class="member-position">Vice-président</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=350&width=320" alt="Houssam Haab">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Houssam Haab</h3>
+                        <p class="member-position">Trésorier</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-row">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=350&width=320" alt="Reda Al-Filali Hammouz">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Reda Al-Filali Hammouz</h3>
+                        <p class="member-position">Trésorier Adjoint</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=350&width=320" alt="Zineb Abu Al-Zohour">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Zineb Abu Al-Zohour</h3>
+                        <p class="member-position">Secrétaire Générale</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=350&width=320" alt="Ahmed Hammoush">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Ahmed Hammoush</h3>
+                        <p class="member-position">Secrétaire Général Adjoint</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-members">
+            <div class="section-header">
+                <span class="section-subtitle">Membres de l'Équipe</span>
+                <h2 class="section-title">Notre Équipe Complète</h2>
+                <p class="section-description">Des membres dévoués qui contribuent chaque jour au succès de notre mission.</p>
+            </div>
+
+
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=280&width=250" alt="Dalal BOUHAJBANE">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Dalal BOUHAJBANE</h3>
+                        <p class="member-position">Chargée de Programmes</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=280&width=250" alt="Lamia SELLAK">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Lamia SELLAL</h3>
+                        <p class="member-position">Assistante Administrative et Financière</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=280&width=250" alt="Mouad IMAM">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Mouad IMAM</h3>
+                        <p class="member-position">Responsable Suivi & Évaluation / Coordinateur National des GTPs</p>
+                    </div>
+                </div>
+
+                
+
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=280&width=250" alt="Hamza ABIA">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Hamza ABIA</h3>
+                        <p class="member-position">Assistant de Projet, Protection Sociale</p>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="/placeholder.svg?height=280&width=250" alt="Amal IDRISSI CHORFI">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Amal IDRISSI CHORFI</h3>
+                        <p class="member-position">Assistante Financière (Documentation)</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

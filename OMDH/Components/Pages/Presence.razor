@@ -1,0 +1,633 @@
+﻿@page "/Presence"
+@layout PagesLayout
+@inject NavigationManager NavigationManager
+<style>
+    :root {
+        --primary-color: #1957a6;
+        --primary-dark: #174c91;
+        --secondary-color: #d3612f;
+        --secondary-light: #b55227;
+        --accent-color: #e8f0ed;
+        --danger-color: #d84040;
+        --danger-dark: #c53030;
+        --gold-accent: #d4c197;
+        --light-bg: #F5F5F5;
+        --text-dark: #2c3e50;
+        --text-medium: #546e7a;
+        --text-light: white;
+        --border-radius: 6px;
+        --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+        --Montsera: "Montserrat", sans-serif;
+        --Poppins: "Poppins", sans-serif;
+    }
+
+    body {
+        background-color: var(--light-bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+        color: var(--text-dark);
+    }
+
+    button {
+        font-size: 0.95rem;
+        font-weight: 500;
+        padding: 0.5rem 1.8rem;
+        border-radius: var(--border-radius);
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: var(--transition);
+        letter-spacing: 0.5px;
+    }
+
+    .BtnPrimary {
+        background-color: var(--primary-color);
+        color: white;
+        border: 1px solid var(--primary-color);
+    }
+
+        .BtnPrimary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+    .BtnSuc {
+        background-color: var(--secondary-color);
+        color: white;
+        border: 1px solid var(--secondary-color);
+    }
+
+        .BtnSuc:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+    /* Global Presence Page Styles */
+    .presence-section {
+        padding: 5rem 2rem;
+        background-color: var(--light-bg);
+    }
+
+    .presence-container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .presence-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+        .presence-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+            .presence-header h1::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 4px;
+                background-color: var(--secondary-color);
+                border-radius: 2px;
+            }
+
+    .highlight {
+        color: var(--primary-color);
+    }
+
+    .presence-tagline {
+        font-size: 1.2rem;
+        color: var(--text-medium);
+        max-width: 800px;
+        margin: 2rem auto;
+        line-height: 1.6;
+        font-family: var(--Poppins);
+    }
+
+    /* World Map Section */
+    .world-map-section {
+        margin-bottom: 5rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .world-map-container {
+        position: relative;
+        width: 100%;
+        height: 40em;
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+    }
+
+    .world-map {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .map-legend {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background-color: white;
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        z-index: 2;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+
+        .legend-item:last-child {
+            margin-bottom: 0;
+        }
+
+    .legend-color {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+    }
+
+        .legend-color.hq {
+            background-color: var(--secondary-color);
+        }
+
+        .legend-color.office {
+            background-color: var(--primary-color);
+        }
+
+    .legend-text {
+        font-size: 0.8rem;
+        color: var(--text-medium);
+    }
+
+    .global-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin: 3rem 0;
+    }
+
+    .stat-card {
+        flex: 1;
+        min-width: 200px;
+        background-color: white;
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        font-family: var(--Poppins);
+    }
+
+    .stat-label {
+        color: var(--text-medium);
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .regional-presence {
+        margin: 5rem 0;
+    }
+
+    .timeline-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+        .timeline-header h2 {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-family: var(--Poppins);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+            .timeline-header h2::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 3px;
+                background-color: var(--secondary-color);
+                border-radius: 1.5px;
+            }
+
+    .timeline-description {
+        max-width: 800px;
+        margin: 0 auto;
+        color: var(--text-medium);
+        line-height: 1.7;
+        text-align: center;
+    }
+
+    .region-content.active {
+        display: block;
+    }
+
+    .office-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .office-card {
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .office-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+    .office-image {
+        height: 200px;
+        overflow: hidden;
+    }
+
+        .office-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+    .office-card:hover .office-image img {
+        transform: scale(1.05);
+    }
+
+    .office-info {
+        padding: 1.5rem;
+    }
+
+    .office-type {
+        display: inline-block;
+        background-color: var(--accent-color);
+        color: var(--primary-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+    }
+
+        .office-type.hq {
+            background-color: var(--gold-accent);
+            color: var(--text-dark);
+        }
+
+    .office-info h3 {
+        color: var(--primary-color);
+        margin-bottom: 0.8rem;
+        font-family: var(--Poppins);
+    }
+
+    .office-info p {
+        color: var(--text-medium);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .office-contact {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--accent-color);
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        color: var(--text-medium);
+        font-size: 0.9rem;
+    }
+
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-item::before {
+            margin-right: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .contact-item.phone::before {
+            content: '📞';
+        }
+
+        .contact-item.email::before {
+            content: '✉️';
+        }
+
+        .contact-item.address::before {
+            content: '📍';
+        }
+
+    .future-expansion {
+        margin: 5rem 0;
+        background-color: white;
+        padding: 3rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        text-align: center;
+    }
+
+        .future-expansion h2 {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-family: var(--Poppins);
+        }
+
+        .future-expansion p {
+            color: var(--text-medium);
+            line-height: 1.7;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+    .expansion-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .expansion-card {
+        background-color: var(--light-bg);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .expansion-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+
+    .expansion-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .expansion-card h3 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        font-family: var(--Poppins);
+    }
+
+    .expansion-card p {
+        color: var(--text-medium);
+        line-height: 1.6;
+        font-size: 0.95rem;
+        margin-bottom: 0;
+    }
+
+    .cta-section {
+        margin-top: 5rem;
+        text-align: center;
+    }
+
+    .cta-container {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+</style>
+<section class="presence-section">
+    <div class="presence-container">
+        <div class="presence-header">
+            <h1>Notre <span class="highlight">Présence Nationale</span></h1>
+            <p class="presence-tagline">Depuis sa création, l'OMDH a étendu sa présence à travers le Maroc pour plaider en faveur des droits humains, promouvoir la justice et engager les communautés à travers le royaume.</p>
+        </div>
+
+        <div class="world-map-section">
+            <div class="world-map-container">
+                <img src="/Images/Map_Morocco.jpg" alt="Carte du Maroc" class="world-map">
+
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <div class="legend-color hq"></div>
+                        <span class="legend-text">Siège National</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color office"></div>
+                        <span class="legend-text">Antennes Régionales</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="global-stats">
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Régions Actives</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Bureaux Régionaux</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Bénévoles</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">35+</div>
+                <div class="stat-label">Années de Plaidoyer</div>
+            </div>
+        </div>
+
+        <div class="regional-presence">
+            <div class="timeline-header">
+                <h2>Présence Régionale</h2>
+                <p class="timeline-description">Découvrez nos bureaux locaux et notre engagement communautaire à travers le Maroc</p>
+            </div>
+
+            <div class="region-content active">
+
+                <div class="office-grid">
+                    <div class="office-card">
+                        <div class="office-image">
+                            <img src="/Images/Rabat.jpg" alt="Bureau de Rabat">
+                        </div>
+                        <div class="office-info">
+                            <span class="office-type hq">Siège National</span>
+                            <h3>Rabat</h3>
+                            <p>Le siège principal de l'OMDH coordonne les initiatives nationales, le plaidoyer juridique et les programmes de coopération internationale. Établi en 1988, il demeure le cœur de la mission de l'organisation.</p>
+                            <div class="office-contact">
+                                <div class="contact-item phone">+212 537 77 00 60</div>
+                                <div class="contact-item phone">+212 666 94 79 75</div>
+                                <div class="contact-item email">admin.omdh@omdh.ma</div>
+                                <div class="contact-item address">8 , rue Ouargha , Résidence volubilis, appt 1 , Agdal /Rabat , Maroc</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="office-card">
+                        <div class="office-image">
+                            <img src="/Images/casablanca.jpg" alt="Bureau de Casablanca">
+                        </div>
+                        <div class="office-info">
+                            <span class="office-type">Bureau Régional</span>
+                            <h3>Casablanca</h3>
+                            <p>Le bureau de Casablanca soutient les droits urbains, l'inclusion socio-économique et l'aide juridique aux populations vulnérables de la région métropolitaine.</p>
+                            <div class="office-contact">
+                                <div class="contact-item phone">+212 762 59 86 79</div>
+                                <div class="contact-item email"> farah.houmani@omdh.ma</div>
+                                <div class="contact-item address">
+                                    place pasteur 17 résidence BUILD PASTEUR 1er étage N°13
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="office-card">
+                        <div class="office-image">
+                            <img src="/Images/Agadir.jpg" alt="Bureau d'Agadir">
+                        </div>
+                        <div class="office-info">
+                            <span class="office-type">Bureau Régional</span>
+                            <h3>Agadir</h3>
+                            <p>L'antenne d'Agadir traite des questions relatives aux droits amazighs, à la justice environnementale et au soutien des communautés rurales dans la région de Souss-Massa.</p>
+                            <div class="office-contact">
+                                <div class="contact-item phone">+212 666 43 28 97</div>
+                                <div class="contact-item email">
+                                    Oumaima.Lahmar@omdh.ma
+                                </div>
+                                <div class="contact-item address">
+                                    N° 22, 5e étage, Immeuble Moulak, rue Al Qadi Ayyad, zone industrielle, Agadir.
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="office-card">
+                        <div class="office-image">
+                            <img src="/Images/oujda.jpeg" alt="Bureau d'Oujda">
+                        </div>
+                        <div class="office-info">
+                            <span class="office-type">Bureau Régional</span>
+                            <h3>Oujda</h3>
+                            <p>L'antenne d'Oujda se concentre sur les questions de migration, la coopération transfrontalière et les programmes d'éducation communautaire dans la région orientale du Maroc.</p>
+                            <div class="office-contact">
+                                <div class="contact-item phone">+212 536 00 00 00</div>
+                                <div class="contact-item email">admin.omdh@omdh.ma</div>
+                                <div class="contact-item address">
+                                    Rue Ziyani, Quartier Elmahata, 1er étage
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="office-card">
+                        <div class="office-image">
+                            <img src="/Images/Tangier.jpg" alt="Bureau de Tanger">
+                        </div>
+                        <div class="office-info">
+                            <span class="office-type">Bureau Régional</span>
+                            <h3>Tanger</h3>
+                            <p>Situé dans le nord, le bureau de Tanger gère des programmes pour la jeunesse, des ateliers sur les droits humains et des initiatives de plaidoyer local en partenariat avec des groupes de la société civile.</p>
+                            <div class="office-contact">
+                                <div class="contact-item phone">+212 539 00 00 00</div>
+                                <div class="contact-item email">admin.omdh@omdh.ma</div>
+                                <div class="contact-item address">
+                                    Rue de Fès N° 156, face au laboratoire Castilla
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="future-expansion">
+            <h2>Perspectives d'Avenir</h2>
+            <p>Dans le cadre de notre engagement continu à défendre et promouvoir les droits humains à travers le Maroc, l'OMDH prépare des initiatives stratégiques pour renforcer notre présence locale et approfondir notre impact dans les régions mal desservies.</p>
+
+            <div class="expansion-grid">
+                <div class="expansion-card">
+                    <div class="expansion-icon">🤝</div>
+                    <h3>Sensibilisation Communautaire</h3>
+                    <p>Nous visons à ouvrir de nouveaux bureaux de liaison communautaire dans les zones reculées pour assurer un meilleur accès au soutien juridique, à l'éducation aux droits humains et aux outils de participation civique.</p>
+                </div>
+
+                <div class="expansion-card">
+                    <div class="expansion-icon">🏫</div>
+                    <h3>Éducation aux Droits Humains</h3>
+                    <p>Des plans sont en cours pour collaborer avec les écoles et les universités à travers le Maroc afin de lancer des programmes éducatifs sur les droits humains, le devoir civique et les valeurs démocratiques.</p>
+                </div>
+
+                <div class="expansion-card">
+                    <div class="expansion-icon">📍</div>
+                    <h3>Renforcement Régional</h3>
+                    <p>Nous renforçons nos bureaux régionaux dans des villes comme Oujda, Tanger et Agadir pour soutenir le traitement des cas locaux, le reporting et les initiatives de plaidoyer.</p>
+                </div>
+
+                <div class="expansion-card">
+                    <div class="expansion-icon">🌐</div>
+                    <h3>Partenariats Internationaux</h3>
+                    <p>L'OMDH tisse de nouvelles alliances avec des organisations internationales de défense des droits humains pour échanger des connaissances, lancer des projets communs et amplifier notre voix sur la scène mondiale.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="cta-section">
+            <h2>Rejoignez Notre Réseau Mondial</h2>
+            <p class="presence-tagline">Intéressé(e) par un partenariat avec nous ou par l'exploration d'opportunités de carrière dans l'un de nos sites à travers le monde ?</p>
+            <div class="cta-container">
+                <button @onclick="@(() => Navigateto("/Contact"))" class="BtnPrimary">Nous Contacter</button>
+                <button @onclick="@(() => Navigateto("/Contact"))" class="BtnSuc">Opportunités de Carrière</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code{
+    public void Navigateto(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
+}

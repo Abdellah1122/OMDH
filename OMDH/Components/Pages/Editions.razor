@@ -1,0 +1,310 @@
+﻿@page "/Editions"
+@layout PagesLayout
+<style>
+    :root {
+        --primary-color: #1957a6;
+        --primary-light: #3a74c4;
+        --text-dark: #333333;
+        --text-medium: #666666;
+        --text-light: #999999;
+        --bg-color: #ffffff;
+        --bg-light: #f8f9fa;
+        --border-color: #eeeeee;
+        --transition: all 0.25s ease;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        color: var(--text-dark);
+        background-color: var(--bg-light);
+    }
+
+    .container {
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Header Section */
+    .header-section {
+        position: relative;
+        padding: 80px 0 60px;
+        background-color: white;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .header-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle at 20% 30%, rgba(25, 87, 166, 0.05) 0%, transparent 8%), radial-gradient(circle at 80% 40%, rgba(25, 87, 166, 0.05) 0%, transparent 8%), radial-gradient(circle at 40% 80%, rgba(25, 87, 166, 0.05) 0%, transparent 8%), radial-gradient(circle at 70% 90%, rgba(25, 87, 166, 0.05) 0%, transparent 8%);
+        background-size: 120% 120%;
+        opacity: 0.8;
+    }
+
+    .header-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header-subtitle {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        font-size: 0.9em;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+        display: inline-block;
+    }
+
+    .header-title {
+        font-weight: 700;
+        font-size: 3em;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        color: var(--text-dark);
+        position: relative;
+        display: inline-block;
+    }
+
+        .header-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+    .header-description {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+        font-size: 1.1em;
+        line-height: 1.7;
+        color: var(--text-medium);
+        max-width: 700px;
+        margin: 30px auto 0;
+    }
+
+    /* Articles Section */
+    .articles-section {
+        padding: 60px 0;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+        color: var(--text-dark);
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+    /* Article List */
+    .article-list {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    /* Article Item */
+    .article-item {
+        display: flex;
+        background-color: var(--bg-color);
+        border: 1px solid var(--border-color);
+        transition: var(--transition);
+    }
+
+        .article-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+    .article-image {
+        flex: 0 0 30%;
+        overflow: hidden;
+    }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+
+    .article-item:hover .article-image img {
+        transform: scale(1.05);
+    }
+
+    .article-content {
+        flex: 0 0 70%;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .article-category {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+
+    .article-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--text-dark);
+    }
+
+    .article-meta {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        font-size: 0.8rem;
+        color: var(--text-light);
+    }
+
+    .article-author {
+        margin-right: 15px;
+    }
+
+    .article-excerpt {
+        color: var(--text-medium);
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .article-button {
+        align-self: flex-start;
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--primary-color);
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+    }
+
+        .article-button:hover {
+            color: var(--primary-light);
+        }
+
+        .article-button::after {
+            content: "→";
+            margin-left: 5px;
+            transition: var(--transition);
+        }
+
+        .article-button:hover::after {
+            margin-left: 8px;
+        }
+</style>
+<section class="header-section">
+    <div class="header-pattern"></div>
+    <div class="container">
+        <div class="header-content">
+            <span class="header-subtitle">Ressources & Publications</span>
+            <h1 class="header-title">Nos Articles</h1>
+            <p class="header-description">Découvrez nos dernières publications, analyses et témoignages sur la protection des réfugiés et demandeurs d'asile au Maroc.</p>
+        </div>
+    </div>
+</section>
+
+<section class="articles-section">
+    <div class="container">
+        <h2 class="section-title">Articles à la Une</h2>
+
+        <div class="article-list">
+            <article class="article-item">
+                <div class="article-image">
+                    <img src="/Images/Origimi Pigeon.jpg" alt="Droits des réfugiés au Maroc">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Droits Humains</span>
+                    <h3 class="article-title">Droits des réfugiés au Maroc : état des lieux et perspectives</h3>
+                    <div class="article-meta">
+                        <span class="article-author">Par Ahmed Benali</span>
+                        <span class="article-date">15 mai 2025</span>
+                    </div>
+                    <p class="article-excerpt">Analyse approfondie de la situation juridique des réfugiés au Maroc et des avancées récentes en matière de protection des droits fondamentaux. Cet article examine les défis actuels et propose des pistes pour renforcer le cadre juridique.</p>
+                    <button class="article-button">Lire plus</button>
+                </div>
+            </article>
+
+            <article class="article-item">
+                <div class="article-image">
+                    <img src="/Images/Parlement.png" alt="Intégration des réfugiés">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Intégration</span>
+                    <h3 class="article-title">Parcours d'intégration : témoignages de réfugiés au Maroc</h3>
+                    <div class="article-meta">
+                        <span class="article-author">Par Fatima Zahra</span>
+                        <span class="article-date">3 mai 2025</span>
+                    </div>
+                    <p class="article-excerpt">Recueil de témoignages de réfugiés ayant réussi leur intégration sociale et professionnelle dans différentes régions du Maroc. Ces récits inspirants mettent en lumière les défis surmontés et les facteurs de succès.</p>
+                    <button class="article-button">Lire plus</button>
+                </div>
+            </article>
+
+            <article class="article-item">
+                <div class="article-image">
+                    <img src="/Images/Kids.jpg" alt="Éducation des enfants réfugiés">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Éducation</span>
+                    <h3 class="article-title">L'accès à l'éducation pour les enfants réfugiés : défis et solutions</h3>
+                    <div class="article-meta">
+                        <span class="article-author">Par Karim Tazi</span>
+                        <span class="article-date">28 avril 2025</span>
+                    </div>
+                    <p class="article-excerpt">Étude sur les obstacles à l'éducation des enfants réfugiés et les initiatives mises en œuvre pour garantir leur droit à l'apprentissage. L'article présente également des recommandations pour améliorer l'inclusion scolaire.</p>
+                    <button class="article-button">Lire plus</button>
+                </div>
+            </article>
+
+            <article class="article-item">
+                <div class="article-image">
+                    <img src="/Images/gaza.jpg" alt="Santé mentale des réfugiés">
+                </div>
+                <div class="article-content">
+                    <span class="article-category">Santé</span>
+                    <h3 class="article-title">La santé mentale des réfugiés : une question souvent négligée</h3>
+                    <div class="article-meta">
+                        <span class="article-author">Par Nadia El Mansouri</span>
+                        <span class="article-date">15 avril 2025</span>
+                    </div>
+                    <p class="article-excerpt">Analyse des problèmes de santé mentale chez les réfugiés et des ressources disponibles pour y faire face au Maroc. L'article souligne l'importance d'une approche holistique intégrant le soutien psychologique.</p>
+                    <button class="article-button">Lire plus</button>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,652 @@
+﻿@page "/Campaigns"
+@layout PagesLayout
+@inject NavigationManager NavigationManager
+
+<style>
+    :root {
+        --primary-color: #1957a6;
+        --primary-dark: #174c91;
+        --secondary-color: #d3612f;
+        --secondary-light: #b55227;
+        --accent-color: #e8f0ed;
+        --danger-color: #d84040;
+        --danger-dark: #c53030;
+        --light-bg: #F5F5F5;
+        --text-dark: #2c3e50;
+        --text-medium: #546e7a;
+        --text-light: white;
+        --border-radius: 6px;
+        --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+        --Montsera: "Montserrat", sans-serif;
+        --Poppins: "Poppins", sans-serif;
+    }
+
+    body {
+        background-color: var(--light-bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+        color: var(--text-dark);
+    }
+
+    button {
+        font-size: 0.95rem;
+        font-weight: 500;
+        padding: 0.5rem 1.8rem;
+        border-radius: var(--border-radius);
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: var(--transition);
+        letter-spacing: 0.5px;
+    }
+
+    .BtnPrimary {
+        background-color: var(--primary-color);
+        color: white;
+        border: 1px solid var(--primary-color);
+    }
+
+        .BtnPrimary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+    .BtnSuc {
+        background-color: var(--secondary-color);
+        color: white;
+        border: 1px solid var(--secondary-color);
+    }
+
+        .BtnSuc:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+    /* Initiatives Page Styles */
+    .initiatives-section {
+        padding: 5rem 2rem;
+        background-color: var(--light-bg);
+    }
+
+    .initiatives-container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .initiatives-header {
+        text-align: center;
+        margin-bottom: 4rem;
+        position: relative;
+    }
+
+        .initiatives-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+            .initiatives-header h1::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 4px;
+                background-color: var(--secondary-color);
+                border-radius: 2px;
+            }
+
+    .highlight {
+        color: var(--primary-color);
+    }
+
+    .initiatives-tagline {
+        font-size: 1.2rem;
+        color: var(--text-medium);
+        max-width: 800px;
+        margin: 2rem auto;
+        line-height: 1.6;
+        font-family: var(--Poppins);
+    }
+
+    /* Impact Stats */
+    .impact-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin: 3rem 0;
+    }
+
+    .stat-card {
+        flex: 1;
+        min-width: 200px;
+        background-color: white;
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        font-family: var(--Poppins);
+    }
+
+    .stat-label {
+        color: var(--text-medium);
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    /* Timeline Section */
+    .timeline-section {
+        position: relative;
+        margin: 4rem 0;
+        padding-bottom: 2rem;
+    }
+
+    .timeline-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 4px;
+        background-color: var(--primary-color);
+        transform: translateX(-50%);
+        border-radius: 2px;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 5rem;
+        width: 100%;
+    }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+    .timeline-dot {
+        position: absolute;
+        left: 50%;
+        top: 30px;
+        width: 20px;
+        height: 20px;
+        background-color: var(--secondary-color);
+        border: 4px solid white;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+
+    .timeline-content {
+        width: 45%;
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 0;
+        position: relative;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+    }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+        margin-left: auto;
+    }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            transform: rotate(45deg);
+        }
+
+    .timeline-item:nth-child(even) .timeline-content::before {
+        content: '';
+        position: absolute;
+        top: 30px;
+        right: -10px;
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        transform: rotate(45deg);
+    }
+
+    .timeline-image {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+    }
+
+        .timeline-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+    .timeline-content:hover .timeline-image img {
+        transform: scale(1.05);
+    }
+
+    .timeline-text {
+        padding: 1.5rem;
+    }
+
+    .timeline-date {
+        display: inline-block;
+        background-color: var(--accent-color);
+        color: var(--primary-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+    }
+
+    .timeline-text h3 {
+        color: var(--primary-color);
+        margin-bottom: 0.8rem;
+        font-family: var(--Poppins);
+        font-size: 1.3rem;
+    }
+
+    .timeline-text p {
+        color: var(--text-medium);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .timeline-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+        border-top: 1px solid var(--accent-color);
+        padding-top: 1rem;
+    }
+
+    .location-tag {
+        display: inline-flex;
+        align-items: center;
+        background-color: var(--light-bg);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        color: var(--text-medium);
+    }
+
+        .location-tag::before {
+            content: '📍';
+            margin-right: 0.3rem;
+        }
+
+    /* Initiative Cards Grid */
+    .initiatives-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+    }
+
+    .initiative-card {
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .initiative-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+    .initiative-image {
+        height: 200px;
+        overflow: hidden;
+    }
+
+        .initiative-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+    .initiative-card:hover .initiative-image img {
+        transform: scale(1.05);
+    }
+
+    .initiative-content {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .initiative-category {
+        display: inline-block;
+        background-color: var(--accent-color);
+        color: var(--primary-color);
+        padding: 0.3rem 0.8rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+    }
+
+    .initiative-content h3 {
+        color: var(--primary-color);
+        margin-bottom: 0.8rem;
+        font-family: var(--Poppins);
+        font-size: 1.3rem;
+    }
+
+    .initiative-content p {
+        color: var(--text-medium);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .initiative-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        border-top: 1px solid var(--accent-color);
+        padding-top: 1rem;
+    }
+
+    .initiative-date {
+        font-size: 0.9rem;
+        color: var(--text-medium);
+    }
+
+    /* CTA Section */
+    .cta-section {
+        margin-top: 5rem;
+        padding: 4rem 2rem;
+        background-color: var(--primary-color);
+        border-radius: var(--border-radius);
+        text-align: center;
+        color: white;
+    }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-family: var(--Poppins);
+        }
+
+    .cta-description {
+        max-width: 800px;
+        margin: 0 auto 2rem;
+        line-height: 1.7;
+        opacity: 0.9;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .cta-btn {
+        padding: 0.8rem 2rem;
+        border-radius: var(--border-radius);
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .cta-btn.primary {
+            background-color: white;
+            color: var(--primary-color);
+        }
+
+        .cta-btn.secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+</style>
+<section class="initiatives-section">
+    <div class="initiatives-container">
+        <div class="initiatives-header">
+            <h1>Nos <span class="highlight">Initiatives et Réalisations</span></h1>
+            <p class="initiatives-tagline">Depuis des décennies, l'Organisation Marocaine des Droits Humains (OMDH) est à l'avant-garde de la défense des droits humains au Maroc, impulsant des changements significatifs à travers des initiatives stratégiques, un plaidoyer persistant et un engagement communautaire.</p>
+        </div>
+
+        <div class="impact-stats">
+            <div class="stat-card">
+                <div class="stat-number">1,000+</div>
+                <div class="stat-label">Prisonniers Politiques Libérés</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">35+</div>
+                <div class="stat-label">Années de Plaidoyer</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Rapports sur les Droits Humains</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">10,000+</div>
+                <div class="stat-label">Jeunes Éduqués</div>
+            </div>
+        </div>
+
+        <div class="timeline-section">
+            <div class="timeline-line"></div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="/Images/DeathPenaltyAbolition.jpg" alt="Campagne pour l'abolition de la peine de mort">
+                    </div>
+                    <div class="timeline-text">
+                        <span class="timeline-date">Depuis les années 1990</span>
+                        <h3>Abolition de la Peine de Mort</h3>
+                        <p>L'OMDH est à l'avant-garde de la lutte pour l'abolition de la peine de mort au Maroc. Grâce à un plaidoyer persistant, des partenariats avec des coalitions internationales et une mobilisation publique, elle a créé un élan en faveur d'une réforme législative. Son travail comprend l'organisation de conférences nationales, la publication d'études et la sensibilisation du public pour faire évoluer les perspectives sociétales et politiques sur la peine capitale.</p>
+                        <div class="timeline-footer">
+                            <span class="location-tag">À l'échelle nationale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="/Images/Prisonners.jpeg" alt="Soutien aux prisonniers politiques">
+                    </div>
+                    <div class="timeline-text">
+                        <span class="timeline-date">Fin des années 1980</span>
+                        <h3>Soutien aux Prisonniers Politiques</h3>
+                        <p>Durant une période de répression politique intense, l'OMDH a joué un rôle crucial dans la documentation et la dénonciation de la détention de militants politiques et de dissidents. Leur plaidoyer a contribué à la libération de plus de 1 000 prisonniers et a conduit à la création du Conseil Consultatif des Droits de l'Homme, marquant un tournant dans l'histoire des droits humains du pays.</p>
+                        <div class="timeline-footer">
+                            <span class="location-tag">À l'échelle nationale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="/Images/wOMENrIGHT.jpg" alt="Plaidoyer pour les droits des femmes">
+                    </div>
+                    <div class="timeline-text">
+                        <span class="timeline-date">En cours</span>
+                        <h3>Plaidoyer pour les Droits des Femmes</h3>
+                        <p>L'OMDH a défendu les droits des femmes marocaines en poussant à des réformes du code de la famille, en luttant contre la violence basée sur le genre et en plaidant pour l'égalité des chances dans l'éducation, l'emploi et la vie publique. Leurs campagnes mettent l'accent sur le démantèlement des barrières culturelles et légales qui marginalisent les femmes, promouvant une société plus inclusive.</p>
+                        <div class="timeline-footer">
+                            <span class="location-tag">À l'échelle nationale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="/Images/Awarness.jpg" alt="Éducation des jeunes aux droits humains">
+                    </div>
+                    <div class="timeline-text">
+                        <span class="timeline-date">En cours</span>
+                        <h3>Éducation des Jeunes aux Droits Humains</h3>
+                        <p>Convaincue que le changement commence par la jeunesse, l'OMDH mène des programmes éducatifs à travers le Maroc pour inculquer un profond respect des droits humains aux jeunes générations. Par le biais d'initiatives scolaires, d'ateliers et de médias interactifs, elle vise à former une jeunesse civique et consciente de ses droits, capable de façonner un avenir plus juste et démocratique.</p>
+                        <div class="timeline-footer">
+                            <span class="location-tag">À l'échelle nationale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-image">
+                        <img src="/Images/ChildMariage.jpeg" alt="Campagne contre le mariage des mineurs">
+                    </div>
+                    <div class="timeline-text">
+                        <span class="timeline-date">2019</span>
+                        <h3>Campagne contre le Mariage des Mineurs</h3>
+                        <p>L'OMDH a lancé une campagne nationale vigoureuse pour mettre fin au mariage des enfants, en soulignant ses conséquences psychologiques, sociales et juridiques. En faisant pression pour une application plus stricte des lois sur le mariage et en sensibilisant les communautés rurales, la campagne vise à protéger les mineurs des unions forcées et précoces, garantissant leur droit à l'éducation et à l'autonomie.</p>
+                        <div class="timeline-footer">
+                            <span class="location-tag">À l'échelle nationale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; margin-top: 5rem; font-size: 2rem; color: var(--text-dark); font-family: var(--Poppins);">Autres Initiatives Clés</h2>
+        <div class="initiatives-grid">
+            <div class="initiative-card" data-category="freedom advocacy">
+                <div class="initiative-image">
+                    <img src="/Images/freedomeofspech.jpg" alt="Liberté d'expression">
+                </div>
+                <div class="initiative-content">
+                    <span class="initiative-category">Liberté & Justice</span>
+                    <h3>Défense de la Liberté d'Expression</h3>
+                    <p>L'OMDH se tient comme un défenseur inébranlable des journalistes, artistes et citoyens confrontés à la censure ou au harcèlement judiciaire pour avoir exprimé une opinion divergente. Elle surveille les affaires juridiques, publie des déclarations publiques et fournit un soutien juridique dans des affaires très médiatisées concernant la liberté d'expression, s'efforçant de maintenir une sphère publique pluraliste et démocratique.</p>
+                    <div class="initiative-footer">
+                        <span class="initiative-date">En cours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="initiative-card" data-category="advocacy">
+                <div class="initiative-image">
+                    <img src="/Images/humainrightreporting.jpg" alt="Documentation des droits humains">
+                </div>
+                <div class="initiative-content">
+                    <span class="initiative-category">Plaidoyer</span>
+                    <h3>Documentation et Rapports sur les Droits Humains</h3>
+                    <p>Grâce à des enquêtes de terrain méticuleuses, des entretiens et des analyses juridiques, l'OMDH produit des rapports détaillés qui exposent les violations des droits humains et influencent la politique nationale. Sa documentation est devenue une source crédible pour les acteurs nationaux et internationaux des droits humains, renforçant la responsabilité et la transparence dans la gouvernance.</p>
+                    <div class="initiative-footer">
+                        <span class="initiative-date">En cours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="initiative-card" data-category="education advocacy">
+                <div class="initiative-image">
+                    <img src="/Images/Parlement.png" alt="Conférences et débats publics">
+                </div>
+                <div class="initiative-content">
+                    <span class="initiative-category">Éducation</span>
+                    <h3>Conférences et Débats Publics</h3>
+                    <p>L'OMDH organise des débats publics inclusifs et des conférences académiques pour mettre en lumière les questions des droits humains au niveau national. Ces forums favorisent le dialogue entre militants, universitaires, décideurs politiques et citoyens, encourageant des solutions constructives aux défis les plus pressants des droits humains au Maroc.</p>
+                    <div class="initiative-footer">
+                        <span class="initiative-date">En cours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="initiative-card" data-category="advocacy">
+                <div class="initiative-image">
+                    <img src="/Images/9.jpg" alt="Partenariats internationaux">
+                </div>
+                <div class="initiative-content">
+                    <span class="initiative-category">Plaidoyer</span>
+                    <h3>Partenariats Internationaux pour les Droits Humains</h3>
+                    <p>L'OMDH collabore avec des organismes internationaux tels que l'ONU, Amnesty International et la Coalition Mondiale Contre la Peine de Mort pour amplifier son impact. Ces partenariats permettent le partage des connaissances, des campagnes conjointes et un plaidoyer stratégique qui alignent l'agenda des droits humains du Maroc sur les normes mondiales.</p>
+                    <div class="initiative-footer">
+                        <span class="initiative-date">En cours</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="initiative-card" data-category="advocacy freedom">
+                <div class="initiative-image">
+                    <img src="/Images/Suppport.jpg" alt="Soutien aux victimes">
+                </div>
+                <div class="initiative-content">
+                    <span class="initiative-category">Liberté & Justice</span>
+                    <h3>Soutien aux Victimes de Violations des Droits Humains</h3>
+                    <p>Au-delà du plaidoyer, l'OMDH offre un soutien direct aux victimes d'abus — qu'il s'agisse de survivants de torture, de familles de personnes disparues ou de femmes confrontées à la violence. Ce soutien comprend une assistance juridique, des soins psychologiques et un plaidoyer public pour aider les victimes à retrouver leur dignité et à obtenir justice et réparations.</p>
+                    <div class="initiative-footer">
+                        <span class="initiative-date">En cours</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Rejoignez Notre Mouvement pour les Droits Humains</h2>
+            <p class="cta-description">Ensemble, nous pouvons construire un Maroc où les droits humains sont respectés, protégés et réalisés pour tous. Votre soutien rend notre travail possible.</p>
+            <div class="cta-buttons">
+                <button class="BtnSuc" @onclick="@(() => Navigateto("/Contact"))">Soutenez Notre Travail</button>
+                <button class="BtnSuc" @onclick="@(() => Navigateto("/Contact"))">Devenez Bénévole</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code{
+    public void Navigateto(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
+}

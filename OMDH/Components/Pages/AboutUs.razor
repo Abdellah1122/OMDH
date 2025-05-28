@@ -1,0 +1,798 @@
+﻿@page "/about-us"
+@layout PagesLayout
+@inject NavigationManager NavigationManager
+<style>
+    :root {
+        --primary-color: #1957a6;
+        --primary-dark: #174c91;
+        --secondary-color: #d3612f;
+        --secondary-light: #b55227;
+        --accent-color: #e8f0ed;
+        --danger-color: #d84040;
+        --danger-dark: #c53030;
+        --gold-accent: #d4c197;
+        --light-bg: #F5F5F5;
+        --text-dark: #2c3e50;
+        --text-medium: #546e7a;
+        --text-light: white;
+        --border-radius: 6px;
+        --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+        --Montsera: "Montserrat", sans-serif;
+        --Poppins: "Poppins", sans-serif;
+        --Roboto: "Roboto", sans-serif;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: var(--Montsera);
+        font-size: 0.99em;
+        transition: var(--transition);
+    }
+
+    body {
+        background-color: var(--light-bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+        color: var(--text-dark);
+    }
+
+    button {
+        font-size: 0.95rem;
+        font-weight: 500;
+        padding: 0.5rem 1.8rem;
+        border-radius: var(--border-radius);
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: var(--transition);
+        letter-spacing: 0.5px;
+    }
+
+    .BtnPrimary {
+        background-color: var(--primary-color);
+        color: white;
+        border: 1px solid var(--primary-color);
+    }
+
+        .BtnPrimary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+    .BtnSuc {
+        background-color: var(--secondary-color);
+        color: white;
+        border: 1px solid var(--secondary-color);
+    }
+
+        .BtnSuc:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+    .BtnDanger {
+        background-color: var(--danger-color);
+        color: white;
+        border: 1px solid var(--danger-color);
+    }
+
+        .BtnDanger:hover {
+            background-color: var(--danger-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+    /* About Us Section Styles */
+    .about-section {
+        padding: 5rem 2rem;
+        background-color: var(--light-bg);
+    }
+
+    .about-container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .about-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+        .about-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+            .about-header h1::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 4px;
+                background-color: var(--secondary-color);
+                border-radius: 2px;
+            }
+
+    .highlight {
+        color: var(--primary-color);
+    }
+
+    .about-tagline {
+        font-size: 1.2rem;
+        color: var(--text-medium);
+        max-width: 700px;
+        margin: 2rem auto;
+        line-height: 1.6;
+        font-family: var(--Poppins);
+    }
+
+    .about-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3rem;
+        margin-bottom: 4rem;
+    }
+
+    .about-image {
+        flex: 1;
+        min-width: 300px;
+        position: relative;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+    }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+    .image-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        padding: 2rem;
+    }
+
+    .founded-year {
+        display: inline-block;
+        background-color: var(--gold-accent);
+        color: var(--text-dark);
+        padding: 0.5rem 1.5rem;
+        font-weight: 600;
+        border-radius: var(--border-radius);
+        font-family: var(--Poppins);
+    }
+
+    .about-text {
+        flex: 1;
+        min-width: 300px;
+    }
+
+        .about-text h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-family: var(--Poppins);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+            .about-text h2::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 50px;
+                height: 3px;
+                background-color: var(--secondary-color);
+                border-radius: 1.5px;
+            }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: var(--text-medium);
+            font-size: 1.05rem;
+        }
+
+    .stats-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin: 2.5rem 0;
+    }
+
+    .stat-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-width: 120px;
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+    .stat-number {
+        display: block;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: var(--text-medium);
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+
+    .cta-container {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .timeline-section {
+        margin: 5rem 0;
+        position: relative;
+    }
+
+        .timeline-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 3rem;
+            font-family: var(--Poppins);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+            .timeline-section h2::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 3px;
+                background-color: var(--secondary-color);
+                border-radius: 1.5px;
+            }
+
+    .timeline-container {
+        position: relative;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary-color);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+
+    .timeline-item {
+        padding: 10px 40px;
+        position: relative;
+        width: 50%;
+        box-sizing: border-box;
+    }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--secondary-color);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+    .timeline-left {
+        left: 0;
+    }
+
+    .timeline-right {
+        left: 50%;
+    }
+
+    .timeline-left::after {
+        right: -10px;
+    }
+
+    .timeline-right::after {
+        left: -10px;
+    }
+
+    .timeline-content {
+        padding: 20px;
+        background-color: white;
+        position: relative;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+
+        .timeline-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-family: var(--Poppins);
+        }
+
+        .timeline-content .date {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content p {
+            line-height: 1.6;
+            color: var(--text-medium);
+        }
+
+    .values-section {
+        margin-top: 5rem;
+        text-align: center;
+    }
+
+        .values-section h2 {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-family: var(--Poppins);
+        }
+
+    .values-description {
+        max-width: 800px;
+        margin: 0 auto 3rem;
+        color: var(--text-medium);
+        line-height: 1.7;
+    }
+
+    .values-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+    }
+
+    .value-card {
+        flex: 1;
+        min-width: 250px;
+        max-width: 350px;
+        background-color: white;
+        padding: 2.5rem 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+    .value-icon {
+        margin-bottom: 1.5rem;
+    }
+
+    .icon-circle {
+        width: 70px;
+        height: 70px;
+        background-color: var(--accent-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        transition: transform 0.3s ease;
+    }
+
+    .value-card:hover .icon-circle {
+        transform: scale(1.1);
+        background-color: var(--primary-color);
+    }
+
+        .value-card:hover .icon-circle span {
+            color: white;
+        }
+
+    .icon-circle span {
+        font-size: 1.8rem;
+        color: var(--primary-color);
+        transition: color 0.3s ease;
+    }
+
+    .value-card h3 {
+        font-size: 1.4rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        font-family: var(--Poppins);
+    }
+
+    .value-card p {
+        color: var(--text-medium);
+        line-height: 1.6;
+    }
+
+
+    .Projects img {
+        width: 20em;
+        margin-top: 1em;
+        border-radius: var(--border-radius);
+        height: auto
+    }
+
+    .Partnairs {
+
+        padding: 2em;
+        background-color: #f9f9f9;
+        text-align: center;
+    }
+
+    .Partnairs h2 {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 1.5em;
+    }
+
+    .parts {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5em;
+    }
+
+    .ImgCont {
+        width: 15em;
+        height: 13em;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 1em;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .ImgCont:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .ImgCont img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+</style>
+<section class="about-section">
+    <div class="about-container">
+        <div class="about-header">
+            <h1>À propos de <span class="highlight">l'OMDH</span></h1>
+            <p class="about-tagline">
+                Depuis sa création en 1988, l'Organisation Marocaine des Droits Humains (OMDH) est un pilier de la défense, de la protection et de la promotion des droits humains au Maroc. Ancrée dans les principes d'universalité, d'indivisibilité et d'interdépendance des droits, l'OMDH plaide pour la dignité, l'égalité et la justice pour tous.
+            </p>
+        </div>
+
+        <div class="about-content">
+            <div class="about-image">
+                <img src="/Images/candle White Background.jpg" alt="OMDH">
+                <div class="image-overlay">
+                    <span class="founded-year">Fondée en 1988</span>
+                </div>
+            </div>
+
+            <div class="about-text">
+                <h2>Qui sommes-nous</h2>
+                <p>
+                    L'Organisation Marocaine des Droits Humains (OMDH) est une association reconnue au niveau national, indépendante et démocratique, créée en 1988 par des défenseurs des droits humains engagés à respecter les normes internationales. Elle est ouverte à toutes les personnes qui partagent les valeurs de liberté, d'égalité et de justice, sans aucune discrimination fondée sur le sexe, la langue, la religion ou l'idéologie.
+                </p>
+
+                <p>
+                    L'OMDH opère dans le cadre des conventions internationales des droits humains ratifiées par le Maroc et de la législation nationale. Elle se concentre sur la nature universelle, globale et complémentaire des droits civils, politiques, économiques, sociaux, culturels et environnementaux.
+                </p>
+
+                <h2>Notre parcours</h2>
+                <p>
+                    L'OMDH est née en réponse à un besoin national croissant d'une organisation démocratique des droits humains qui unit les citoyens au-delà des clivages idéologiques. Au fil des décennies, elle s'est développée pour devenir un vaste mouvement pour la justice, façonnant le débat public, influençant les politiques et apportant son soutien aux victimes de violations des droits humains.
+                </p>
+
+                <p>
+                    À travers son siège et ses sections régionales, l'OMDH a constamment contribué aux grands débats et réformes nationaux. Elle a participé à la justice transitionnelle, à la modernisation du code pénal et à la protection des populations vulnérables, tout en restant fermement ancrée dans la société civile.
+                </p>
+
+                <h2>Notre mission</h2>
+                <p>
+                    La mission de l'OMDH est de promouvoir, protéger et étendre les droits humains au Maroc à travers un large éventail d'actions comprenant le plaidoyer, l'éducation, le soutien juridique, la réforme des politiques et les interventions sur le terrain. Elle s'efforce d'inculquer une culture fondée sur les droits parmi les citoyens et les institutions publiques.
+                </p>
+
+                <p>
+                    L'organisation défend l'indivisibilité des droits et se concentre sur des questions clés telles que la justice transitionnelle, l'égalité des sexes, la protection des groupes vulnérables, la démocratie participative et l'éducation aux droits humains.
+                </p>
+
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <span class="stat-number">+35</span>
+                        <span class="stat-label">Années de défense des droits humains</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">+100</span>
+                        <span class="stat-label">Campagnes de plaidoyer et de sensibilisation</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">+40</span>
+                        <span class="stat-label">Partenariats régionaux et locaux</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">+10K</span>
+                        <span class="stat-label">Personnes sensibilisées par l'éducation</span>
+                    </div>
+                </div>
+
+                <div class="cta-container">
+                    <button class="BtnPrimary" @onclick="@(() => Navigateto("/Projects"))">Nos Projets</button>
+                    <button class="BtnSuc" @onclick="@(() => Navigateto("/Contact"))">Nous Contacter</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-section">
+            <div class="Sec">
+                <div class="Projects">
+                    <MudTimeline>
+
+                        <MudTimelineItem Style="color:black;" Size="Size.Small">
+                            <ItemOpposite>
+                                <MudText Style="color: var(--primary-color);" Typo="Typo.h5">1988</MudText>
+                            </ItemOpposite>
+                            <ItemContent>
+                                <div class="autoShow">
+                                    <MudText Style="color: var(--primary-color);" Typo="Typo.h6" GutterBottom="true">Fondation de l'OMDH</MudText>
+                                </div>
+                                <div class="autoShow">
+                                    <MudText>L'Organisation Marocaine des Droits Humains (OMDH) a été officiellement fondée le 28 mai 1988, à Agdal, Rabat, dans le but de sensibiliser aux droits humains et de défendre les victimes de violations.</MudText>
+                                </div>
+                                <div class="autoShow">
+                                    <img src="/Images/HandsSolidarity.jpg" />
+                                </div>
+                            </ItemContent>
+                        </MudTimelineItem>
+
+                        <MudTimelineItem Style="color:black;" Size="Size.Small">
+                            <ItemOpposite>
+                                <MudText Style="color: var(--secondary-color);" Typo="Typo.h5">1993</MudText>
+                            </ItemOpposite>
+                            <ItemContent>
+                                <div class="autoShow">
+                                    <MudText Style="color: var(--secondary-color);" Typo="Typo.h6" GutterBottom="true">Reconnaissance internationale</MudText>
+                                </div>
+                                <div class="autoShow">
+                                    <MudText>L'OMDH devient membre de la Fédération Internationale pour les Droits Humains (FIDH), élargissant ainsi son influence et son accès aux forums internationaux des droits humains.</MudText>
+                                </div>
+                                <div class="autoShow">
+                                    <img src="/Images/CandleInHand2.jpg" />
+                                </div>
+                            </ItemContent>
+                        </MudTimelineItem>
+
+                        <MudTimelineItem Style="color:black;" Size="Size.Small">
+                            <ItemOpposite>
+                                <MudText Style="color: var(--primary-color);" Typo="Typo.h5">2004</MudText>
+                            </ItemOpposite>
+                            <ItemContent>
+                                <div class="autoShow">
+                                    <MudText Style="color: var(--primary-color);" Typo="Typo.h6" GutterBottom="true">Justice et Réconciliation</MudText>
+                                </div>
+                                <div class="autoShow">
+                                    <MudText>L'OMDH joue un rôle clé au sein de l'Instance Équité et Réconciliation (IER) du Maroc, contribuant à la justice transitionnelle et aux efforts de recherche de la vérité.</MudText>
+                                </div>
+                                <div class="autoShow">
+                                    <img src="/Images/Women.jpg" />
+                                </div>
+                            </ItemContent>
+                        </MudTimelineItem>
+
+                        <MudTimelineItem Style="color:black;" Size="Size.Small">
+                            <ItemOpposite>
+                                <MudText Style="color: var(--secondary-color);" Typo="Typo.h5">2011</MudText>
+                            </ItemOpposite>
+                            <ItemContent>
+                                <div class="autoShow">
+                                    <MudText Style="color: var(--secondary-color);" Typo="Typo.h6" GutterBottom="true">Printemps arabe et Réforme constitutionnelle</MudText>
+                                </div>
+                                <div class="autoShow">
+                                    <MudText>Lors des réformes constitutionnelles qui ont suivi les manifestations de 2011, l'OMDH plaide pour l'élargissement des protections des droits humains, l'indépendance judiciaire et l'égalité des sexes.</MudText>
+                                </div>
+                                <div class="autoShow">
+                                    <img src="/Images/arabspring.jpeg" />
+                                </div>
+                            </ItemContent>
+                        </MudTimelineItem>
+
+                        <MudTimelineItem Style="color:black;" Size="Size.Small">
+                            <ItemOpposite>
+                                <MudText Style="color: var(--primary-color);" Typo="Typo.h5">2023</MudText>
+                            </ItemOpposite>
+                            <ItemContent>
+                                <div class="autoShow">
+                                    <MudText Style="color: var(--primary-color);" Typo="Typo.h6" GutterBottom="true">Plaidoyer national et Partenariats</MudText>
+                                </div>
+                                <div class="autoShow">
+                                    <MudText>L'OMDH renforce sa coopération avec les universités marocaines, les institutions civiles et les organisations internationales pour promouvoir l'éducation, les droits des femmes et les libertés civiles.</MudText>
+                                </div>
+                                <div class="autoShow">
+                                    <img src="/Images/ChatGPT Image May 3, 2025, 05_09_56 PM.png" />
+                                </div>
+                            </ItemContent>
+                        </MudTimelineItem>
+
+                    </MudTimeline>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="values-section">
+            <h2>Nos valeurs fondamentales</h2>
+            <p class="values-description">Nos valeurs constituent le fondement de notre mission et de nos actions. Elles représentent notre engagement indéfectible envers la justice, la dignité et les droits humains pour tous.</p>
+            <div class="values-container">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <div class="icon-circle">
+                            <span>⚖️</span>
+                        </div>
+                    </div>
+                    <h3>Justice</h3>
+                    <p>Nous recherchons la justice à travers la réforme juridique, la responsabilisation et la défense des droits individuels et collectifs, garantissant l'équité et la justice dans toute la société marocaine.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <div class="icon-circle">
+                            <span>🕊️</span>
+                        </div>
+                    </div>
+                    <h3>Dignité</h3>
+                    <p>Nous promouvons le respect de la dignité inhérente à chaque personne, en œuvrant pour éliminer la discrimination, l'exclusion et la violence sous toutes ses formes.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <div class="icon-circle">
+                            <span>🤝</span>
+                        </div>
+                    </div>
+                    <h3>Solidarité</h3>
+                    <p>Nous collaborons avec les communautés, les organisations et les institutions pour construire une voix collective pour les droits humains et renforcer la participation de la société civile.</p>
+                </div>
+
+                <div class="value-card">
+                    <div class="value-icon">
+                        <div class="icon-circle">
+                            <span>📣</span>
+                        </div>
+                    </div>
+                    <h3>Plaidoyer</h3>
+                    <p>Nous participons activement au discours public, influençons les politiques et prenons des mesures concrètes pour protéger les droits humains et les libertés démocratiques.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="Partnairs">
+        <h2>Découvrez tous nos partenaires !</h2>
+        <div class="parts">
+            <div class="ImgCont">
+                <img src="/IntPartnaires/28JUN-ECOSOC-LOGO-BLOG.png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/IntPartnaires/Amnesty_International_logo.svg.png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/IntPartnaires/LC-Logo-thumbnail-980x551-1-400x250.jpg" />
+            </div>
+            <div class="ImgCont">
+                <img src="/IntPartnaires/WORLD_REPORT_2023_OF_HUMAN_RIGHTS_WATCH_0.png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/UNIPartnaires/1631365508628.jpeg" />
+            </div>
+            <div class="ImgCont">
+                <img src="/UNIPartnaires/images (3).png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/UNIPartnaires/images.jpeg" />
+            </div>
+            <div class="ImgCont">
+                <img src="/UNIPartnaires/Logo-UIZ.jpg" />
+            </div>
+            <div class="ImgCont">
+                <img src="/UNIPartnaires/logo.png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/UNIPartnaires/Mohammed_V_University_Logo.png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/UNIPartnaires/univ-cadi-ayyad-logo-900x420-1.png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/UNIPartnaires/universite-abdelmalek-essaadi-900x420-1.png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/UNIPartnaires/Universite-Hassan-1er-settat.png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/NatPartnaires/ensemble-contre-la-peine-de-mort-ecpm-morocco-417461.jpg" />
+            </div>
+            <div class="ImgCont">
+                <img src="/NatPartnaires/images (1).jpeg" />
+            </div>
+            <div class="ImgCont">
+                <img src="/NatPartnaires/images (1).png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/NatPartnaires/images (2).png" />
+            </div>
+            <div class="ImgCont">
+                <img src="/NatPartnaires/images.jpeg" />
+            </div>
+            <div class="ImgCont">
+                <img src="/NatPartnaires/images.png" />
+            </div>
+        </div>
+    </div>
+</section>
+@code {
+    public void Navigateto(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
+}

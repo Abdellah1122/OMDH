@@ -1,0 +1,132 @@
+﻿@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+<style>
+    :root {
+        --primary-color: #1957a6;
+        --primary-dark: #174c91;
+        --secondary-color: #d3612f;
+        --secondary-light: #b55227;
+        --accent-color: #e8f0ed;
+        --danger-color: #d84040;
+        --danger-dark: #c53030;
+        --gold-accent: #d4c197;
+        --light-bg: #F5F5F5;
+        --text-dark: #2c3e50;
+        --text-medium: #546e7a;
+        --text-light: #78909c;
+        --border-radius: 6px;
+        --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
+
+    /* Dropdown menu styles */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: var(--box-shadow);
+        border-radius: var(--border-radius);
+        z-index: 1000;
+        overflow: hidden;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content button {
+        width: 100%;
+        padding: 12px 16px;
+        text-align: left;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: var(--transition);
+        color: var(--text-dark);
+    }
+
+        .dropdown-content button:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+</style>
+
+<div class="Nv" id="navbar">
+    <div class="logo-container">
+        <button @onclick="@(() => Navigateto("/"))" class="Btnss"><img src="/Logo.png" alt="Logo" /></button>
+    </div>
+    <div class="NavBtns">
+        <div class="dropdown">
+            <button class="Btnss">À propos de l'organisation<i class="bi bi-arrow-down-short"></i></button>
+            <div class="dropdown-content">
+                <button @onclick="@(() => Navigateto("/about-us"))">Qui sommes-nous</button>
+                <button @onclick="@(() => Navigateto("/Missions"))">Missions</button>
+                <button @onclick="@(() => Navigateto("/Presence"))">Présence nationale</button>
+                <button @onclick="@(() => Navigateto("/Campaigns"))">Campagnes</button>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="Btnss">Projets<i class="bi bi-arrow-down-short"></i></button>
+            <div class="dropdown-content">
+                <button @onclick="@(() => Navigateto("/Projects"))">Tous les projets</button>
+                <button @onclick="@(() => Navigateto("/ProjectHCR"))">Projet HCR</button>
+            </div>
+        </div>
+        <button @onclick="@(() => Navigateto("/Team"))" class="Btnss">Équipe</button>
+        <button @onclick="@(() => Navigateto("/Editions"))" class="Btnss">Éditions</button>
+        <button @onclick="@(() => Navigateto("/Contact"))" class="Btnss">Contact</button>
+    </div>
+</div>
+
+<script>
+    window.initializeNavbarScroll = () => {
+        window.addEventListener("scroll", () => {
+            let navbar = document.getElementById("navbar");
+            if (window.scrollY > window.innerHeight) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
+            }
+        });
+    };
+</script>
+
+<script>
+    function scrollToElement(className) {
+        const element = document.querySelector('.' + className);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+</script>
+
+@code {
+    private string scrollToClass = "Introo";
+    private string Ourstory = "finddd";
+
+    private async Task ScrollToDiv(string className)
+    {
+        scrollToClass = className;
+        await JSRuntime.InvokeVoidAsync("scrollToElement", scrollToClass);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializeNavbarScroll");
+        }
+    }
+
+    public void Navigateto(string url)
+    {
+        NavigationManager.NavigateTo(url);
+    }
+
+}

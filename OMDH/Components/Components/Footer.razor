@@ -1,0 +1,308 @@
+﻿@using System.Text.RegularExpressions
+@inject NavigationManager NavigationManager
+@inject NewsLetterService NewsLetterService
+@inject ISnackbar Snackbar
+
+<style>
+    :root {
+        --primary-color: #1957a6;
+        --primary-dark: #174c91;
+        --secondary-color: #d3612f;
+        --secondary-light: #b55227;
+        --accent-color: #e8f0ed;
+        --danger-color: #d84040;
+        --danger-dark: #c53030;
+        --gold-accent: #d4c197;
+        --light-bg: #F5F5F5;
+        --text-dark: #2c3e50;
+        --text-medium: #546e7a;
+        --text-light: #78909c;
+        --border-radius: 6px;
+        --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
+
+    .language-selector {
+        display: flex;
+        gap: 1em;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+        .language-selector button {
+            color: var(--text-medium);
+            width: 2em;
+            margin: -0.5em;
+            transition: var(--transition);
+        }
+
+            .language-selector button:hover {
+                color: var(--primary-color);
+            }
+
+    .form-group {
+        gap: 1em;
+    }
+
+    .Right input {
+        margin-bottom: 0.5em;
+        height: 4em;
+        padding: 0.7rem;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    /* Hide the Google Translate toolbar and elements */
+    .goog-te-banner-frame {
+        display: none !important;
+    }
+
+    .goog-te-gadget {
+        display: none !important;
+    }
+
+    .goog-te-combo {
+        display: none !important;
+    }
+
+    /* Hide iframe to prevent UI shift */
+    body > .skiptranslate {
+        display: none !important;
+    }
+
+    .goog-te-banner-frame,
+    .goog-te-balloon-frame,
+    .goog-te-menu-frame,
+    .goog-te-menu-value,
+    .goog-te-gadget,
+    .goog-te-combo,
+    .skiptranslate,
+    #goog-gt-tt,
+    .goog-tooltip,
+    .goog-tooltip:hover {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    body {
+        top: 0 !important;
+        position: static !important;
+    }
+
+    /* Hide iframe to prevent UI shift */
+    iframe.skiptranslate,
+    .goog-te-gadget-simple img,
+    .goog-te-gadget-icon {
+        display: none !important;
+    }
+
+    /* Prevent content shifting */
+    html {
+        margin-top: 0 !important;
+    }
+
+</style>
+
+<div class="Footerr">
+    <div class="hh">
+        <div class="Left">
+            <div class="Logo">
+                <img src="/Logo2.png" alt="OMDH Logo" />
+            </div>
+            <div class="Omdh">
+                <p>L'Organisation Marocaine des Droits Humains (OMDH) est une organisation de défense des droits humains distinguée et engagée, dédiée à traiter des questions cruciales telles que la détention politique, la torture et la promotion plus large de la sensibilisation aux droits humains. Axée sur la défense de la justice et de la dignité, l'OMDH travaille sans relâche pour sensibiliser le public et favoriser un changement positif dans le domaine des droits humains tant au niveau national qu'international.</p>
+            </div>
+        </div>
+        <div class="Center">
+            <h2>Liens</h2>
+            <div class="cnt">
+                <i class="bi bi-telephone-fill"></i>
+                <button @onclick="navigateToContact">Nous Contacter</button>
+            </div>
+            <div class="cnt">
+                <i class="bi bi-kanban"></i>
+                <button @onclick="navigateToMission">Notre Mission</button>
+            </div>
+            <div class="cnt">
+                <i class="bi bi-card-checklist"></i>
+                <button @onclick="navigateToProjects">Nos Projets</button>
+            </div>
+            <div class="cnt">
+                <i class="bi bi-people-fill"></i>
+                <button @onclick="navigateToTeam">Notre Équipe</button>
+            </div>
+        </div>
+
+        <div class="Right">
+            <h2>Contactez-nous</h2>
+            <div class="Contact">
+                <div class="cnt">
+                    <i class="bi bi-geo"></i>
+                    <p>
+                        8, rue Ouargha,
+                        Résidence Volubilis, appt 1,
+                        Agdal / Rabat,
+                        Maroc
+                    </p>
+                </div>
+                <div class="cnt">
+                    <i class="bi bi-telephone-fill"></i>
+                    <p>+212 537 77 00 60</p>
+                </div>
+                <div class="cnt">
+                    <i class="bi bi-telephone-fill"></i>
+                    <p>+212 666 94 79 75</p>
+                </div>
+                <div class="cnt">
+                    <i class="bi bi-envelope"></i>
+                    <p>admin.omdh@omdh.ma</p>
+                </div>
+                <div class="btns">
+                    <button @onclick="NavigateToLinkedin"><i class="bi bi-linkedin"></i></button>
+                    <button @onclick="NavigateToFacebook"><i class="bi bi-facebook"></i></button>
+                    <button @onclick="NavigateToX"><i class="bi bi-twitter-x"></i></button>
+                    <button @onclick="NavigateToInstagram"><i class="bi bi-instagram"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="Right">
+            <h2>Restez Informé</h2>
+            <p>Abonnez-vous à notre newsletter pour les dernières nouvelles et mises à jour.</p>
+            <div class="form-group">
+                <input type="text" id="name" @bind="Nom" placeholder="Votre Nom" />
+                <input type="email" id="email" @bind="Email" placeholder="Votre Email" />
+            </div>
+            <button class="btn-primary" @onclick="Subscribe">S'abonner</button>
+        </div>
+    </div>
+
+    <div class="AfterFooter">
+        <p>Tous droits réservés</p>
+        <div id="language-selector" class="language-selector">
+            <button onclick="changeLanguage('en')">English</button> |
+            <button onclick="changeLanguage('es')">Español</button> |
+            <button onclick="changeLanguage('ar')">العربية</button> |
+            <button onclick="changeLanguage('fr')">Français</button>
+        </div>
+        <div id="google_translate_element"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,es,ar,fr',
+            autoDisplay: false,
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+    }
+
+    function changeLanguage(langCode) {
+        // Direct method to change language
+        if (langCode === 'en') {
+            // For English, we can reset to original
+            var frame = document.getElementsByClassName('goog-te-banner-frame')[0];
+            if (frame) {
+                var frameDoc = frame.contentDocument || frame.contentWindow.document;
+                var restore = frameDoc.getElementsByTagName('button')[0];
+                if (restore) {
+                    restore.click();
+                    return;
+                }
+            }
+        }
+
+        // Use cookie-based approach as fallback
+        document.cookie = `googtrans=/en/${langCode}; path=/; domain=.${window.location.host}`;
+        document.cookie = `googtrans=/en/${langCode}; path=/;`;
+
+        // Reload page to apply changes
+        location.reload();
+    }
+
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+@code {
+    private string Nom = string.Empty;
+    private string Email = string.Empty;
+    private async Task Subscribe()
+    {
+        // Email Regex: basic RFC 5322 compliant version
+        var emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+        // Name Regex: only letters, spaces, and optional accents (adjust to match your locale)
+        var nameRegex = new Regex(@"^[\p{L}\s'-]+$");
+
+        if (!emailRegex.IsMatch(Email))
+        {
+            Snackbar.Add("Veuillez entrer une adresse email valide.", Severity.Error);
+            return;
+        }
+
+        if (!nameRegex.IsMatch(Nom))
+        {
+            Snackbar.Add("Le nom ne doit contenir que des lettres et aucun chiffre.", Severity.Error);
+            return;
+        }
+
+        EmailUserName EU = new EmailUserName
+            {
+                Email = Email,
+                Name = Nom
+            };
+
+        try
+        {
+            await NewsLetterService.CreateAsync(EU);
+            Snackbar.Add("Abonnement réussi !", Severity.Success);
+            Nom = string.Empty;
+            Email = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"L'abonnement a échoué : {ex.Message}", Severity.Error);
+        }
+    }
+
+    void navigateToHome()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+    void navigateToContact()
+    {
+        NavigationManager.NavigateTo("/Contact");
+    }
+    void navigateToMission()
+    {
+        NavigationManager.NavigateTo("/Mission");
+    }
+    void navigateToTeam()
+    {
+        NavigationManager.NavigateTo("/Team");
+    }
+    void navigateToProjects()
+    {
+        NavigationManager.NavigateTo("/Projects");
+    }
+    private void NavigateToFacebook()
+    {
+        NavigationManager.NavigateTo("https://www.facebook.com", forceLoad: true);
+    }
+    private void NavigateToInstagram()
+    {
+        NavigationManager.NavigateTo("https://www.Instagram.com", forceLoad: true);
+    }
+    private void NavigateToLinkedin()
+    {
+        NavigationManager.NavigateTo("https://www.linkedin.com/", forceLoad: true);
+    }
+    private void NavigateToX()
+    {
+        NavigationManager.NavigateTo("https://www.X.com/", forceLoad: true);
+    }
+
+}
