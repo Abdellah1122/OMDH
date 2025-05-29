@@ -1,91 +1,67 @@
-﻿
-.Nv {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0.5em 8rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(230, 240, 237, 0.2);
-    backdrop-filter: blur(7px);
-    border-bottom: 1px solid var(--secondary-color);
-    transition: background-color 0.3s ease;
-}
-
-    .Nv.scrolled {
-    }
-
-        .Nv.scrolled .Btnss {
-        }
-
-.logo-container img {
-    height: 40px;
-    width: auto;
-    transition: transform 0.3s ease;
-}
-
-    .logo-container img:hover {
-        transform: scale(1.05);
-    }
-
-.NavBtns {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-}
-
-.Btnss {
-    background-color: transparent;
-    border: none;
-    color: black;
-    font-size: 1.1em;
-    font-weight: 500;
-    padding: 0.5rem 0.75rem;
-    cursor: pointer;
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-    .Btnss:hover {
-        color: var(--primary-color);
-    }
-
-    .Btnss::after {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: 0;
-        left: 50%;
-        background-color: var(--primary-dark);
-        transition: all 0.3s ease;
-    }
-
-    .Btnss:hover::after {
-        width: 100%;
-        left: 0;
-    }
-
-@media (max-width: 768px) {
+﻿/* Responsive breakpoints */
+@media (max-width: 1200px) {
     .Nv {
-        flex-direction: column;
-        padding: 1em;
-    }
-
-    .logo-container {
-        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
     }
 
     .NavBtns {
-        width: 80%;
-        justify-content: center;
-        flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .Btnss {
-        font-size:small;
-        padding: 0.2rem 0.1rem;
+        font-size: 1rem;
+        padding: 0.4rem 0.6rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .NavBtns {
+        gap: 0.5rem;
+    }
+
+    .Btnss {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.5rem;
+    }
+
+    .dropdown-content {
+        min-width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .NavBtns {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .mobile-nav-overlay.active {
+        display: block;
+    }
+
+    .mobile-nav-menu {
+        display: block;
+    }
+
+    .Nv {
+        padding: 0.5rem 1rem;
+    }
+
+    /* Hide desktop dropdowns on mobile */
+    .dropdown:hover .dropdown-content {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-container img {
+        height: 35px;
+    }
+
+    .mobile-nav-menu {
+        width: 280px;
     }
 }

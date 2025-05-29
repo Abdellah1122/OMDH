@@ -1,0 +1,421 @@
+﻿@page "/Article1"
+@layout PagesLayout
+<style>
+    :root {
+        --primary-color: #1957a6;
+        --primary-light: #3a74c4;
+        --text-dark: #333333;
+        --text-medium: #666666;
+        --text-light: #999999;
+        --bg-color: #ffffff;
+        --bg-light: #f8f9fa;
+        --border-color: #eeeeee;
+        --transition: all 0.25s ease;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        color: var(--text-dark);
+        background-color: var(--bg-light);
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .wide-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Navigation */
+    .nav-breadcrumb {
+        padding: 20px 0;
+        background-color: var(--bg-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .breadcrumb {
+        font-size: 0.9rem;
+        color: var(--text-medium);
+    }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+            .breadcrumb a:hover {
+                color: var(--primary-light);
+            }
+
+        .breadcrumb span {
+            margin: 0 8px;
+            color: var(--text-light);
+        }
+
+    /* Article Header */
+    .article-header {
+        background-color: var(--bg-color);
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    .article-category {
+        display: inline-block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--primary-color);
+        background: rgba(25, 87, 166, 0.08);
+        padding: 6px 16px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+    }
+
+    .article-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        color: var(--text-dark);
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .article-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-medium);
+        max-width: 600px;
+        margin: 0 auto 30px;
+        line-height: 1.6;
+    }
+
+    .article-meta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        font-size: 0.9rem;
+        color: var(--text-medium);
+        margin-bottom: 20px;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .meta-divider {
+        width: 1px;
+        height: 16px;
+        background-color: var(--border-color);
+    }
+
+    /* Hero Image */
+    .article-hero {
+        margin: 40px 0;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .image-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+        color: white;
+        padding: 30px 20px 20px;
+        font-size: 0.9rem;
+        font-style: italic;
+    }
+
+    /* Article Content */
+    .article-content {
+        background-color: var(--bg-color);
+        padding: 50px 0;
+    }
+
+    .content-body {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-dark);
+    }
+
+        .content-body p {
+            margin-bottom: 24px;
+        }
+
+        .content-body h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .content-body h2::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 50px;
+                height: 2px;
+                background-color: var(--primary-color);
+            }
+
+        .content-body h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--text-dark);
+        }
+
+        .content-body blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding: 20px 30px;
+            margin: 30px 0;
+            background-color: var(--bg-light);
+            font-style: italic;
+            font-size: 1.05rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .content-body ul, .content-body ol {
+            margin: 20px 0 20px 30px;
+        }
+
+        .content-body li {
+            margin-bottom: 8px;
+        }
+
+    .highlight-box {
+        background: linear-gradient(135deg, rgba(25, 87, 166, 0.05), rgba(25, 87, 166, 0.02));
+        border: 1px solid rgba(25, 87, 166, 0.1);
+        border-radius: 8px;
+        padding: 25px;
+        margin: 30px 0;
+    }
+
+    /* Author Section */
+    .author-section {
+        background-color: var(--bg-light);
+        padding: 40px 0;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .author-card {
+        background-color: var(--bg-color);
+        border-radius: 12px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .author-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--primary-color);
+    }
+
+    .author-info h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: var(--text-dark);
+    }
+
+    .author-info .author-title {
+        color: var(--primary-color);
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    .author-info .author-bio {
+        color: var(--text-medium);
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    /* Related Articles */
+    .related-articles {
+        padding: 60px 0;
+        background-color: var(--bg-color);
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 40px;
+        color: var(--text-dark);
+        position: relative;
+    }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .related-card {
+        background-color: var(--bg-light);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: var(--transition);
+        border: 1px solid var(--border-color);
+    }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+    .related-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .related-content {
+        padding: 20px;
+    }
+
+    .related-category {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--primary-color);
+        margin-bottom: 8px;
+    }
+
+    .related-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--text-dark);
+        line-height: 1.3;
+    }
+
+    .related-excerpt {
+        font-size: 0.9rem;
+        color: var(--text-medium);
+        line-height: 1.5;
+    }
+
+    /* Back to Articles */
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 20px;
+        transition: var(--transition);
+    }
+
+        .back-link:hover {
+            color: var(--primary-light);
+            transform: translateX(-3px);
+        }
+
+</style>
+<!-- Navigation Breadcrumb -->
+<nav class="nav-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Accueil</a>
+            <span>›</span>
+            <a href="/Editions">Editions</a>
+            <span>›</span>
+            <span>انتخاب نوفل البعمري رئيسا للمنظمة المغربية لحقوق الإنسان</span>
+        </div>
+    </div>
+</nav>
+<header class="article-header" dir="rtl" lang="ar">
+    <div class="container">
+        <h1 class="article-title">انتخاب نوفل البعمري رئيسا للمنظمة المغربية لحقوق الإنسان</h1>
+        <p class="article-subtitle">استراتيجية جديدة للعمل الميداني وتعزيز حقوق الإنسان</p>
+
+        <div class="article-meta">
+            <div class="meta-item">
+                <strong>بقلم محمد الطالب - الرباط</strong>
+            </div>
+            <div class="meta-divider"></div>
+            <div class="meta-item">
+                28 ماي 2025
+            </div>
+            @* Read time removed as it's not provided in the new data *@
+        </div>
+    </div>
+</header>
+
+<section class="article-hero">
+    <div class="container">
+        <img src="/Images/2.jpeg" alt="انتخاب نوفل البعمري" class="hero-image">
+        @* Image caption removed as no new caption was provided *@
+    </div>
+</section>
+
+<article class="article-content" dir="rtl" lang="ar">
+    <div class="container">
+        <div class="content-body">
+            <p>خلال أشغال المؤتمر الوطني الثاني عشر للمنظمة المغربية لحقوق الإنسان، الذي انعقد نهاية الأسبوع الماضي بمدينة الرباط، جددت المنظمة هياكلها التنظيمية، حيث تم انتخاب الأستاذ نوفل البعمري، المحامي بهيئة تطوان، رئيسا وطنيا جديدا للمنظمة خلفا للأستاذ بوبكر لركو، الذي قضى ولايتين على رأس المنظمة.</p>
+
+            <p>وأكد الأستاذ نوفل البعمري، في كلمته بعد انتخابه رئيسا جديدا للمنظمة، أن هذه الأخيرة ستواصل انخراطها القوي في النهوض بحقوق الإنسان في شموليتها، من خلال استراتيجية جديدة ترتكز على العمل الميداني، وعلى القرب من المواطنين، وعلى تعزيز التنسيق مع باقي مكونات الحركة الحقوقية، ومواصلة الانخراط الفاعل في الدفاع عن قضايا حقوق الإنسان وطنيا ودوليا، خاصة في هذه الظرفية الدقيقة التي تمر منها القضية الوطنية الأولى، التي تشكل أولوية بالنسبة إلى كل المغاربة.</p>
+
+            <p>وأضاف الرئيس الجديد للمنظمة المغربية لحقوق الإنسان أن الجهاز التنفيذي للمنظمة، سيعمل على تقوية الفروع الجهوية، وجعلها آليات رئيسية في التفاعل مع المواطنين، مشيرا إلى أن المرحلة المقبلة ستشهد انخراطا كبيرا للمنظمة في التحولات التي تعرفها بلادنا على مستويات متعددة.</p>
+
+            <p>وجاء في بلاغ صادر عن المؤتمر الوطني الثاني عشر للمنظمة المغربية لحقوق الإنسان، أن أشغال المؤتمر مرت في أجواء شفافة وديموقراطية، حيث تم عرض التقريرين الأدبي والمالي والمصادقة عليهما، قبل انتخاب المكتب الوطني الجديد للمنظمة، الذي أفرز انتخاب الأستاذ نوفل البعمري رئيسا، وبعضوية كل من عبد الكريم العلام، ونادية النور، وعبد الله الخلطي، ونادية الشراط، وعبد الحق بنقادى، وحورية بوغنبور، وسعاد حمود، وعبد العزيز قراقي، وسلوى شفيق، وخالد بوشناق، ونزهة المريني، وعبد المجيد طلحة، وعادل أوراغ، وسليمان السدراوي، وفاطمة الرنداني، وسعاد عزيز، وعائشة بناني، ومحمد العلوي، ومريم عزيز، وسعيد مرزوقي، وآخرين.</p>
+
+            <p>وأشار البلاغ إلى أن المؤتمر الوطني الثاني عشر، كان مناسبة للوقوف على ما تحقق في الولاية السابقة من مكتسبات على مستوى الحضور المؤسساتي للمنظمة، وعلى مستوى التفاعل مع القضايا الحقوقية الراهنة، سواء تعلق الأمر بالحقوق المدنية والسياسية، أو الحقوق الاقتصادية والاجتماعية والثقافية والبيئية، مؤكدا أن المنظمة راكمت تجربة كبيرة في الاشتغال الميداني، وفي الترافع من أجل ترسيخ ثقافة حقوق الإنسان.</p>
+        </div>
+    </div>
+</article>

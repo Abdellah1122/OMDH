@@ -1,0 +1,490 @@
+﻿@page "/Article3"
+@layout PagesLayout
+<style>
+    :root {
+        --primary-color: #1957a6;
+        --primary-light: #3a74c4;
+        --text-dark: #333333;
+        --text-medium: #666666;
+        --text-light: #999999;
+        --bg-color: #ffffff;
+        --bg-light: #f8f9fa;
+        --border-color: #eeeeee;
+        --transition: all 0.25s ease;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        line-height: 1.6;
+        color: var(--text-dark);
+        background-color: var(--bg-light);
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .wide-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Navigation */
+    .nav-breadcrumb {
+        padding: 20px 0;
+        background-color: var(--bg-color);
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .breadcrumb {
+        font-size: 0.9rem;
+        color: var(--text-medium);
+    }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+            .breadcrumb a:hover {
+                color: var(--primary-light);
+            }
+
+        .breadcrumb span {
+            margin: 0 8px;
+            color: var(--text-light);
+        }
+
+    /* Article Header */
+    .article-header {
+        background-color: var(--bg-color);
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    .article-category {
+        display: inline-block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--primary-color);
+        background: rgba(25, 87, 166, 0.08);
+        padding: 6px 16px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+    }
+
+    .article-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        color: var(--text-dark);
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .article-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-medium);
+        max-width: 600px;
+        margin: 0 auto 30px;
+        line-height: 1.6;
+    }
+
+    .article-meta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        font-size: 0.9rem;
+        color: var(--text-medium);
+        margin-bottom: 20px;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .meta-divider {
+        width: 1px;
+        height: 16px;
+        background-color: var(--border-color);
+    }
+
+    /* Hero Image */
+    .article-hero {
+        margin: 40px 0;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        display: block;
+    }
+
+    .image-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+        color: white;
+        padding: 30px 20px 20px;
+        font-size: 0.9rem;
+        font-style: italic;
+    }
+
+    /* Article Content */
+    .article-content {
+        background-color: var(--bg-color);
+        padding: 50px 0;
+    }
+
+    .content-body {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-dark);
+    }
+
+        .content-body p {
+            margin-bottom: 24px;
+        }
+
+        .content-body h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .content-body h2::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 50px;
+                height: 2px;
+                background-color: var(--primary-color);
+            }
+
+        .content-body h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 30px 0 15px;
+            color: var(--text-dark);
+        }
+
+        .content-body blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding: 20px 30px;
+            margin: 30px 0;
+            background-color: var(--bg-light);
+            font-style: italic;
+            font-size: 1.05rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .content-body ul, .content-body ol {
+            margin: 20px 0 20px 30px;
+        }
+
+        .content-body li {
+            margin-bottom: 8px;
+        }
+
+    .highlight-box {
+        background: linear-gradient(135deg, rgba(25, 87, 166, 0.05), rgba(25, 87, 166, 0.02));
+        border: 1px solid rgba(25, 87, 166, 0.1);
+        border-radius: 8px;
+        padding: 25px;
+        margin: 30px 0;
+    }
+
+    /* Author Section */
+    .author-section {
+        background-color: var(--bg-light);
+        padding: 40px 0;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .author-card {
+        background-color: var(--bg-color);
+        border-radius: 12px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .author-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--primary-color);
+    }
+
+    .author-info h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: var(--text-dark);
+    }
+
+    .author-info .author-title {
+        color: var(--primary-color);
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    .author-info .author-bio {
+        color: var(--text-medium);
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    /* Related Articles */
+    .related-articles {
+        padding: 60px 0;
+        background-color: var(--bg-color);
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 40px;
+        color: var(--text-dark);
+        position: relative;
+    }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .related-card {
+        background-color: var(--bg-light);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: var(--transition);
+        border: 1px solid var(--border-color);
+    }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+    .related-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .related-content {
+        padding: 20px;
+    }
+
+    .related-category {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--primary-color);
+        margin-bottom: 8px;
+    }
+
+    .related-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--text-dark);
+        line-height: 1.3;
+    }
+
+    .related-excerpt {
+        font-size: 0.9rem;
+        color: var(--text-medium);
+        line-height: 1.5;
+    }
+
+    /* Back to Articles */
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: 20px;
+        transition: var(--transition);
+    }
+
+        .back-link:hover {
+            color: var(--primary-light);
+            transform: translateX(-3px);
+        }
+
+</style>
+<nav class="nav-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Accueil</a>
+            <span>›</span>
+            <a href="/Editions">Editions</a>
+            <span>›</span>
+            <span>البيان العام الصادر عن المؤتمر الوطني الثاني عشر</span>
+        </div>
+    </div>
+</nav>
+<header class="article-header" dir="rtl" lang="ar">
+    <div class="container">
+        <div class="article-category">Actualité</div>
+        <h1 class="article-title">البيان العام الصادر عن المؤتمر الوطني الثاني عشر المنعقد أيام 25-26-27 أبريل 2025</h1>
+        <p class="article-subtitle">Moroccan Organization of Human Rights – Organisation Marocaine des Droits Humains</p>
+
+        <div class="article-meta">
+            <div class="meta-item">
+                <strong>بقلم المنظمة المغربية لحقوق الإنسان</strong>
+            </div>
+            <div class="meta-divider"></div>
+            <div class="meta-item">
+                27 أبريل 2025
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="article-hero">
+    <div class="container">
+        <img src="/Images/Com.jpg" alt="المؤتمر الوطني الثاني عشر للمنظمة المغربية لحقوق الانسان" class="hero-image">
+        <div class="image-caption">
+            المؤتمر الوطني الثاني عشر للمنظمة المغربية لحقوق الانسان
+        </div>
+    </div>
+</section>
+
+<article class="article-content" dir="rtl" lang="ar">
+    <div class="container">
+        <div class="content-body">
+            <p>انعقد المؤتمر الوطني الثاني عشر للمنظمة المغربية لحقوق الانسان أيام 25-26-27 أبريل 2025 بالمعهد الوطني لكتابة الضبط والمهن القانونية والقضائية تحت شعار "أي فعلية لحقوق الانسان في ظل التحولات الدولية الراهنة؟ ، وقد تم التمهيد لأشغال المؤتمر بتنظيم ندوة موضوعاتية تحت عنوان "الحقوق الاقتصادية والاجتماعية والثقافية في السياسات العمومية وسؤال الفعلية، وتهدف هذه الندوة إلى طرح وضعية هذه الحقوق انطلاقا من السياسات العمومية التي نهجتها الحكومة في ظل تدبيرها للشأن العمومي، وقد شارك في تأطيرها مجموعة من الأساتذة الجامعيين والخبراء والفاعلين الحقوقيين الوطنيين والدوليين حيث طرحت مجموعة من الأسئلة والاشكالات المرتبطة بوضعية الحقوق الاقتصادية والاجتماعية والثقافية في ظل سؤال مركزي مرتبط بمدى فعليتها في السياسات العمومية، مؤكدين على ضرورة التزام الحكومة بحماية هذه الحقوق وضمان فعليتها وفقا لالتزامات المغرب الدولية والوطنية المؤطرة بالاتفاقيات والصكوك ومواثيق حقوق الانسان والدستور المغربي. [cite: 1, 2]</p>
+
+            <p>وقد خلصت هذه الندوة الموضوعاتية إلى بلورة توصيات متعلقة بحماية الحقوق الاقتصادية والاجتماعية والثقافية والضمانات الأساسية لفعليتها في إطار السياسات العمومية مع تقديم ملاحظات حول كيفية عمل الفاعلين الحقوقيين لكسب هذا الرهان الحقوقي. [cite: 2]</p>
+
+            <p>وشهدت الجلسة الافتتاحية حضورا وازنا لممثلين عن المؤسسات الوطنية والبعثات الديبلوماسية، وممثلين عن قطاعات حكومية وجمعيات حقوقية ومدنية صديقة وممثلة عن المفوضية السامية لشؤون اللاجئين بالمغرب وقيادات الأحزاب السياسية والمركزيات النقابية. [cite: 3]</p>
+
+            <p>وفي إطار السياق الذي تعيشه القضية الفلسطينية أعطيت الكلمة لسفير دولة فلسطين بالمغرب السيد جمال الشوبكي الذي استعرض الوضعية بالأراضي الفلسطينية المحتلة وآثار العدوان الإسرائيلي على قطاع غزة مذكرا بضرورة ان يتحمل المنتظم الدولي مسؤوليته اتجاه المدنيين بقطاع غزة والضفة الغربية. [cite: 4]</p>
+
+            <p>كما تميزت هذه الجلسة بكلمات المنظمات الدولية الحقوقية الصديقة منها الفيدرالية الدولية لحقوق الانسان والشبكة الأرورومتوسطية للحقوق والمنظمة العربية لحقوق الانسان. [cite: 5]</p>
+
+            <p>وفي إطار ثقافة الاعتراف شهدت الجلسة الافتتاحية تكريم عدد من الفعاليات والشخصيات الحقوقية حيث تم تكريم كل من السادة الأستاذ عبد العزيز بناني، الفقيد خالد الناصري، والفقيد أحمد شوقي بنيوب، والأستاذة عايدة حشاد، والأستاذة فاطنة سرحان والأستاذة مليكة غزالي. [cite: 7]</p>
+
+            <p>وفي اليوم الثاني للمؤتمر انطلقت الأشغال بانتخاب الأجهزة المسيرة للمؤتمر: لجنة الرئاسة، لجنة فرز العضوية، لجنة الافتحاص المالي، لجنة البيان العام. [cite: 8, 9]</p>
+
+            <p>وبعد ذلك تم عرض التقريرين الأدبي والمالي من طرف المكتب التنفيذي، وبعد مناقشتهما تم التصويت عليهما بالإجماع. [cite: 9]</p>
+
+            <p>كما تم التصويت بالإجماع على التعديلات المقترحة على القانون الأساسي للمنظمة. [cite: 10]</p>
+            <p>وقد تميز اليوم الأخير من المؤتمر بالمصادقة على لائحة المجلس الوطني المقدمة من طرف وكيل اللائحة الأستاذ نوفل البعمري، وقد حظيت هذه اللائحة بالتصويت بالأغلبية، بعد عرضها على لجنة فرز العضوية التي وقفت على مطابقتها للشروط المنصوص عليها في النظام الداخلي للمنظمة. وقد استند وكيل اللائحة في إعدادها على عدد من المؤشرات تضمن الاستمرارية، التجديد، النوع الشباب، والكفاءة. [cite: 12, 13]</p>
+
+            <p>وقد تميزت أشغال المؤتمر بنقاشات حقوقية عميقة بين المؤتمرات والمؤتمرين والتي تمحورت حول شعار المؤتمر، وتناولت الوضع الحقوقي على المستوى الوطني والإقليمي والدولي. [cite: 14]</p>
+
+            <h2>نتائج المؤتمر:</h2>
+            <div class="highlight-box">
+                <ul>
+                    <li>يثمن المؤتمر المكتسبات الحقوقية بالمغرب، والتي همت مجالات متعددة دستورية، تشريعية، وسياسية ولكن مع ذلك يسجل ضعف فعلية الحقوق الاقتصادية والاجتماعية والثقافية مما يتطلب ضرورة وضع سياسات عمومية جديدة كفيلة بضمان وحماية حقوق الانسان عموما بما فيها الحقوق الاقتصادية والاجتماعية والثقافية. [cite: 15]</li>
+                    <li>يسجل المؤتمر بإيجابية العفو الملكي على مجموعة من الصحفيين والمدونين ومعتقلي الحركات الاحتجاجية والاجتماعية. [cite: 16]</li>
+                    <li>يلتمس المؤتمر أن يشمل العفو باقي معتقلي الحركات الاحتجاجية والاجتماعية، ويطالب بفتح حوارات مع الساكنة لحل المشاكل الاجتماعية المحلية وفقا لمقاربة تشاركية. [cite: 17]</li>
+                    <li>يشيد مؤتمر المنظمة المغربية لحقوق الإنسان بالمبادرة المغربية للحكم الذاتي لما يضمنه من حقوق لفائدة ساكنة المنطقة، ويدين المؤتمر الانتهاكات الجسيمة لحقوق الإنسان بمخيمات تندوف، ويدعو الأطراف الإقليمية إلى تحمل مسؤوليتها في حماية المحتجزين بالمخيمات وضمان كافة حقوقهم كما هي مقررة في القانون الدولي لحقوق الإنسان والقانون الدولي الإنساني. [cite: 18]</li>
+                    <li>يطالب المؤتمر بالتسريع باستكمال مسطرة التشريع المتعلق بمنظومة الحقوق والحريات بما فيها قانون المسطرة الجنائية والقانون الجنائي، والقانون التنظيمي المتعلق بالدفع بعدم الدستورية، وإصدار مدونة جديدة للحريات العامة متواقف مع مقتضيات الدستور والتزامات المملكة. [cite: 18]</li>
+                    <li>التسريع بتفعيل جميع مؤسسات الحكامة المنصوص عليها في الباب 12 من الدستور. [cite: 19]</li>
+                    <li>يسجل المؤتمر بإيجابية المنهجية المعتمدة في مناقشة مشروع مراجعة مدونة الأسرة، وإذ يذكر المؤتمر بالمطالب التي تضمنتها مذكرة المنظمة التي رفعتها إلى الهيئة المكلفة بتعديل مدونة الاسرة، فإنها تؤكد على ضرورة إصدار مدونة للأسرة مواكبة لتطور المجتمع، وتضمن حقوق كل مكونات الأسرة كما هي مكرسة في الدستور والالتزامات الدولية للمملكة. [cite: 20]</li>
+                    <li>التأكيد على ضرورة احترام حرية المواطنات والمواطنين في الرأي والتعبير عبر مختلف الوسائط في إطار القانون، واحترام الحق في التجمع والتظاهر السلميين. [cite: 21]</li>
+                    <li>يسجل المؤتمر التفاعل الإيجابي للمملكة مع عدد من الآليات الأممية الدولية المعنية بحقوق الإنسان ويطالب بمزيد من الانفتاح مع مجموع الآليات بما فيهم المقررين الخواص. [cite: 22]</li>
+                    <li>يطالب بانضمام المغرب إلى باقي الآليات الدولية لحقوق الانسان. [cite: 23]</li>
+                    <li>يطالب المؤتمر بمصادقة المغرب على نظام روما الأساسي للمحكمة الجنائية الدولية. [cite: 23]</li>
+                    <li>يرحب المؤتمر بالتصويت الإيجابي للمغرب على القرار الأممي المتعلق بإيقاف تنفيذ عقوبة الإعدام. [cite: 24]</li>
+                    <li>يطالب بتقييم الاستراتيجية الوطنية للهجرة واللجوء باعتبارها مدخلا لمراجعة شاملة لقوانين الهجرة واللجوء. [cite: 25]</li>
+                    <li>النهوض بوضعية حقوق الأشخاص في وضعية إعاقة، والمسنين. [cite: 26]</li>
+                    <li>التسريع بوضع سياسة عمومية مندمجة ودامجة للشباب اعتمادا على مقاربة قائمة على فعلية حقوق الشباب. [cite: 27]</li>
+                    <li>يطالب المؤتمر، بتعزيز دعامات الديمقراطية وضمانات حقوق الانسان بإفريقيا، وترسيخ بناء دولة الحق والقانون، وحل النزاعات الإقليمية بطرق سلمية، واحترام سيادة الدول ووحدتها الترابية. [cite: 28]</li>
+                    <li>يطالب المؤتمر، الحكومة بالانفتاح على مختلف الآليات الحقوقية الإفريقية. [cite: 29]</li>
+                    <li>يعبر المؤتمر عن القلق من التراجعات التي شهدها الوضع الحقوقي في عدد من الدول المغاربية، وتطالب بعدم استهداف المدافعات والمدافعين عن حقوق الإنسان تحت ذريعة أسباب سياسية. [cite: 29]</li>
+                    <li>تعزيز دولة المؤسسات وحماية الحقوق والحريات والتداول السلمي على السلطة. [cite: 30]</li>
+                    <li>يطالب المؤتمر الدول المغاربية باحترام حقوق المهاجرين في وضعية غير نظامية وطالبي اللجوء طبقا المقررات القانون الدولي لحقوق الإنسان. [cite: 31]</li>
+                    <li>يسجل المؤتمر التحولات الدولية التي يعرفها عالمنا اليوم، حيث بدأت تظهر وقائع وممارسات في الساحة الدولية تمس قيم العدالة والحق في الحياة والمساواة، وتستند إلى منطق القوة بدل منطق القانون، مما يعتم واجهة الدفاع عن حقوق الإنسان. [cite: 32]</li>
+                    <li>ووعيا من المنظمة المغربية لحقوق الانسان بتداعيات وتحديات السياق الدولي الراهن فإنها تؤكد على ما يلي:. [cite: 33]</li>
+                    <li>يطالب المؤتمر بإصلاح منظومة الأمم المتحدة وتأهيل مؤسساتها بما يمكنها من إحلال السلم والأمن الدوليين وحماية الحقوق والحريات الأساسية. [cite: 34]</li>
+                    <li>تعزيز النهوض بحقوق الإنسان وتفعيل أهداف التنمية المستدامة خصوصا في ظل التحولات الدولية الراهنة وما يشهده العالم من تغيرات مناخية. [cite: 35]</li>
+                    <li>ضرورة العمل على مواجهة تنامي خطاب التشكيك في منظومة وقيم ومؤسسات حقوق الإنسان، والخطابات الشعبوية. [cite: 36]</li>
+                    <li>وضع حد للانتهاكات الحقوقية الجسيمة والممنهجة ولجرائم الإبادة الجماعية التي يتعرض لها المدنيون بفلسطين المحتلة. [cite: 37]</li>
+                    <li>يطالب المجتمع الدولي بتحمل مسؤوليته الكاملة في حماية المدنيين العزل ووقف حرب الإبادة التي يتعرض لها الشعب الفلسطيني. [cite: 38]</li>
+                    <li>يؤكد على كون إحلال السلام في المنطقة رهين بإقامة دولة فلسطين المستقلة وعاصمتها القدس الشرقية على حدود 67. [cite: 39]</li>
+                </ul>
+            </div>
+            <h2>توصيات المؤتمر:</h2>
+            <div class="highlight-box">
+                <ul>
+                    <li>وضع استراتيجية عمل طيلة الولاية الانتدابية لأجهزة المنظمة. [cite: 40]</li>
+                    <li>وضع برامج منسجمة لتفعيل استراتيجية العمل، مع تجويد آليات التنفيذ. [cite: 41]</li>
+                    <li>التعبئة من أجل ضمان انخراط جميع مكونات المنظمة في تفعيل استراتيجيتها. [cite: 41]</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>
+
+<section class="author-section">
+    <div class="container">
+        <div class="author-card">
+            <img src="/Logo.png" alt="شعار المنظمة المغربية لحقوق الإنسان" class="author-avatar">
+            <div class="author-info">
+                <h4>المنظمة المغربية لحقوق الإنسان</h4>
+                <p class="author-title">جهة الإصدار</p>
+                <p class="author-bio">
+                    البيان العام الصادر عن المؤتمر الوطني الثاني عشر للمنظمة المغربية لحقوق الإنسان، المنعقد أيام 25-26-27 أبريل 2025 بالرباط.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
