@@ -1,5 +1,5 @@
 ﻿@page "/Missions"
-@inject NavigationManager NavigationManager
+@layout PagesLayout
 <style>
     :root {
         --primary-color: #1957a6;
@@ -17,17 +17,13 @@
         --border-radius: 6px;
         --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
         --transition: all 0.3s ease;
-        --Montsera: "Montserrat", sans-serif;
-        --Poppins: "Poppins", sans-serif;
-        --Roboto: "Roboto", sans-serif;
     }
 
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: var(--Montsera);
-        font-size: 0.99em;
+        font-family: "Montserrat", sans-serif;
         transition: var(--transition);
     }
 
@@ -36,8 +32,10 @@
         min-height: 100vh;
         overflow-x: hidden;
         color: var(--text-dark);
+        font-size: 0.99em;
     }
 
+    /* Button Styles */
     button {
         font-size: 0.95rem;
         font-weight: 500;
@@ -49,81 +47,42 @@
         letter-spacing: 0.5px;
     }
 
-    .BtnPrimary {
+    .btn-primary {
         background-color: var(--primary-color);
         color: white;
         border: 1px solid var(--primary-color);
     }
 
-        .BtnPrimary:hover {
+        .btn-primary:hover {
             background-color: var(--primary-dark);
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
-    .BtnSuc {
+    .btn-secondary {
         background-color: var(--secondary-color);
         color: white;
         border: 1px solid var(--secondary-color);
     }
 
-        .BtnSuc:hover {
+        .btn-secondary:hover {
             background-color: var(--secondary-light);
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
-    .BtnDanger {
-        background-color: var(--danger-color);
-        color: white;
-        border: 1px solid var(--danger-color);
-    }
-
-        .BtnDanger:hover {
-            background-color: var(--danger-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        }
-
-    .MainCont {
-        display: flex;
-        flex-direction: column;
-        gap: 2em;
-        padding: 2em;
-    }
-
-    .Sec {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 2em;
-        gap: 1.5em;
-    }
-
-    .OurStory {
+    /* Hero Section */
+    .hero-section {
         display: flex;
         flex-direction: row;
         gap: 5em;
         padding: 0em 0em 0em 1em;
         background-color: var(--accent-color);
+        min-height: 500px;
+        align-items: center;
     }
 
-    .Sec { /* Duplicate removed, assuming the second one was intended */
-        /* Styles from the second .Sec definition if different */
-        padding: 1em; /* Example difference */
-    }
-
-
-    .image-about img {
-        width: 40vw;
-        min-height: 400px;
-        height: auto;
-        border-radius: 3px;
-        object-fit: cover;
-    }
-
-    .aboutt {
+    .hero-content {
         display: flex;
         flex-direction: column;
         margin-top: 5em;
@@ -131,28 +90,74 @@
         justify-content: center;
         align-items: center;
         gap: 2em;
+        flex: 1;
     }
 
-    .about-p {
+    .hero-title h1 {
+        font-family: "Poppins", sans-serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .hero-description {
         display: flex;
         flex-direction: column;
         text-align: center;
         justify-content: center;
         align-items: center;
-        gap: 1em;
+        gap: 1.5em;
     }
 
-    /* Added Styles for Mission Section */
-    .Missions {
+        .hero-description p {
+            font-family: "Roboto", sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-medium);
+            max-width: 600px;
+        }
+
+    .hero-image {
+        flex: 0 0 40%;
+    }
+
+        .hero-image img {
+            width: 100%;
+            min-height: 400px;
+            height: auto;
+            border-radius: 3px;
+            object-fit: cover;
+        }
+
+    /* Main Content */
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 3em;
+        padding: 3em 2em;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Missions Grid */
+    .missions-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2em;
+    }
+
+    .missions-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 1.5em;
         width: 100%;
-        max-width: 1200px; /* Limit max width */
-        margin-bottom: 2em; /* Space before timeline */
     }
 
-    .Mission {
+    .mission-card {
         background-color: white;
         padding: 1.5em;
         border-radius: var(--border-radius);
@@ -163,63 +168,33 @@
         transition: var(--transition);
     }
 
-        .Mission:hover {
+        .mission-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
-        .Mission h4 {
+        .mission-card h4 {
             color: var(--primary-color);
-            font-family: var(--Poppins);
+            font-family: "Poppins", sans-serif;
             font-size: 1.15rem;
             margin-bottom: 0.3em;
+            font-weight: 600;
         }
 
-        .Mission p {
+        .mission-card p {
             color: var(--text-medium);
-            font-family: var(--Roboto);
+            font-family: "Roboto", sans-serif;
             line-height: 1.6;
             font-size: 0.95rem;
         }
 
-    /* Styles for Timeline Section */
+    /* Timeline Section */
     .timeline-section {
         width: 100%;
-        padding: 2em;
-        background-color: #ffffff; /* White background for contrast */
-        border-radius: var(--border-radius);
-        box-shadow: var(--box-shadow);
-        margin-bottom: 2em; /* Space before CTA */
-    }
-
-    .timeline-header {
-        text-align: center;
-        margin-bottom: 2em;
-    }
-
-        .timeline-header h2 {
-            color: var(--primary-dark);
-            font-family: var(--Poppins);
-            font-size: 1.8rem;
-            margin-bottom: 0.5em;
-        }
-
-        .timeline-header p {
-            color: var(--text-medium);
-            max-width: 700px;
-            margin: 0 auto;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-    /* Enhanced Timeline Section Styles */
-    .timeline-section {
-        width: 100%;
-        max-width: 1200px;
         padding: 3em 2em;
-        background-color: #ffffff;
+        background-color: white;
         border-radius: var(--border-radius);
         box-shadow: var(--box-shadow);
-        margin-bottom: 3em;
         position: relative;
         overflow: hidden;
     }
@@ -237,12 +212,11 @@
     .timeline-header {
         text-align: center;
         margin-bottom: 3em;
-        position: relative;
     }
 
         .timeline-header h2 {
             color: var(--primary-dark);
-            font-family: var(--Poppins);
+            font-family: "Poppins", sans-serif;
             font-size: 2rem;
             margin-bottom: 0.8em;
             position: relative;
@@ -268,70 +242,79 @@
             line-height: 1.7;
         }
 
-    /* Enhanced MudTimeline Styles */
-    ::deep .mud-timeline {
+    /* Custom Timeline */
+    .timeline {
+        position: relative;
         padding: 2em 0;
     }
 
-    ::deep .mud-timeline-item {
-        padding-bottom: 2.5em;
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--primary-color);
+            transform: translateX(-50%);
+        }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 3em;
+        width: 100%;
     }
 
-    ::deep .mud-timeline-item-opposite {
-        margin-bottom: 0.5em;
-    }
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: 0;
+            margin-right: 55%;
+            text-align: right;
+        }
 
-    ::deep .mud-timeline-item-content {
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+            margin-right: 0;
+            text-align: left;
+        }
+
+    .timeline-content {
         background-color: #f8f9fa;
         padding: 1.5em;
         border-radius: var(--border-radius);
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         transition: var(--transition);
-        display: flex;
-        gap: 1.5em;
-        align-items: center;
+        position: relative;
     }
 
-        ::deep .mud-timeline-item-content:hover {
+        .timeline-content:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-    ::deep .mud-timeline-item:nth-child(odd) .mud-timeline-item-content {
+    .timeline-item:nth-child(odd) .timeline-content {
         border-left: 4px solid var(--primary-color);
     }
 
-    ::deep .mud-timeline-item:nth-child(even) .mud-timeline-item-content {
+    .timeline-item:nth-child(even) .timeline-content {
         border-right: 4px solid var(--secondary-color);
     }
 
-    ::deep .mud-timeline-item-dot {
-        box-shadow: 0 0 0 4px rgba(25, 87, 166, 0.2);
-    }
-
-    .timeline-content-wrapper {
-        flex: 1;
-    }
-
-    .timeline-image {
-        width: 120px;
-        height: 120px;
-        flex-shrink: 0;
+    .timeline-dot {
+        position: absolute;
+        left: 50%;
+        top: 1.5em;
+        width: 16px;
+        height: 16px;
+        background-color: var(--primary-color);
         border-radius: 50%;
-        overflow: hidden;
-        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-        border: 3px solid white;
+        transform: translateX(-50%);
+        box-shadow: 0 0 0 4px rgba(25, 87, 166, 0.2);
+        z-index: 2;
     }
-
-        .timeline-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
 
     .timeline-title {
         color: var(--primary-dark);
-        font-family: var(--Poppins);
+        font-family: "Poppins", sans-serif;
         font-size: 1.2rem;
         margin-bottom: 0.6em;
         font-weight: 600;
@@ -339,220 +322,151 @@
 
     .timeline-description {
         color: var(--text-medium);
-        font-family: var(--Roboto);
+        font-family: "Roboto", sans-serif;
         line-height: 1.6;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        padding: 3em 2em;
+        border-radius: var(--border-radius);
+        text-align: center;
+        color: white;
+    }
+
+    .cta-content h2 {
+        font-family: "Poppins", sans-serif;
+        font-size: 2rem;
         margin-bottom: 1em;
+        font-weight: 600;
     }
 
-    .timeline-action {
-        font-size: 0.9rem;
-        color: var(--secondary-color);
-        font-weight: 500;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3em;
-        cursor: pointer;
-        transition: var(--transition);
+    .cta-content p {
+        font-family: "Roboto", sans-serif;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 2em;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-        .timeline-action:hover {
-            color: var(--secondary-light);
+    .cta-content button {
+        background-color: white;
+        color: var(--primary-color);
+        border: 2px solid white;
+        font-weight: 600;
+        padding: 0.8rem 2rem;
+    }
+
+        .cta-content button:hover {
+            background-color: transparent;
+            color: white;
+            border-color: white;
         }
 
-        .timeline-action i {
-            font-size: 1rem;
-        }
-</style>
-<Navigation />
-
-<div class="OurStory">
-    <div class="aboutt">
-        <div class="about-title">
+</style><!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <div class="hero-title">
             <h1>Notre Mission à l'OMDH</h1>
         </div>
-        <div class="about-p">
+        <div class="hero-description">
             <p>L'Organisation Marocaine des Droits Humains (OMDH) se consacre aux principes universels des droits humains. Nous nous efforçons de promouvoir et de protéger les libertés fondamentales, d'assurer l'état de droit et de soutenir les victimes de violations à travers le Maroc et au-delà.</p>
-            <button class="BtnSuc" @onclick="navigateToProjects">Découvrir Nos Actions</button>
+            <button class="btn-secondary">Découvrir Nos Actions</button>
         </div>
     </div>
-    <div class="image-about">
-        <img src="/Images/Solidarity.jpg" alt="Solidarité et Action pour les Droits Humains" />
+    <div class="hero-image">
+        <img src="/Images/Hands.jpg"alt="Solidarité et Action pour les Droits Humains" />
     </div>
-</div>
+</section>
 
-<div class="MainCont">
-    <div class="Sec">
-        <div class="Missions">
-            @if (missions != null && missions.Any())
-            {
-                foreach (var mission in missions.Take(6)) // Display first 6 missions here
-                {
-                    <div class="Mission">
-                        <h4>@mission.Title</h4>
-                        <p>@mission.Description</p>
-                    </div>
-                }
-            }
-            else
-            {
-                <p>Chargement des détails des missions...</p>
-            }
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Missions Grid -->
+    <section class="missions-section">
+        <div class="missions-grid">
+            <div class="mission-card">
+                <h4>Promouvoir et Protéger les Droits Humains</h4>
+                <p>Œuvrer pour la promotion, la jouissance et l'exercice des droits humains et des libertés fondamentales, individuelles et collectives, sans discrimination, sur la base des normes universelles.</p>
+            </div>
+
+            <div class="mission-card">
+                <h4>Surveiller et Signaler les Violations</h4>
+                <p>Surveiller activement, exposer, signaler et traiter toutes les violations des droits humains, en publiant des communiqués de presse et des rapports d'enquête.</p>
+            </div>
+
+            <div class="mission-card">
+                <h4>Plaider pour l'État de Droit</h4>
+                <p>Revendiquer le respect constant des droits humains, l'établissement et la consolidation de l'état de droit, la séparation des pouvoirs et le renforcement de l'indépendance et de l'impartialité du pouvoir judiciaire.</p>
+            </div>
+
+            <div class="mission-card">
+                <h4>Éducation et Culture des Droits Humains</h4>
+                <p>Diffuser la culture des droits humains, poursuivre l'éducation à la citoyenneté et sensibiliser la société marocaine et la communauté internationale au respect de ces droits.</p>
+            </div>
+
+            <div class="mission-card">
+                <h4>Normes Internationales et Harmonisation</h4>
+                <p>Appeler à la ratification des instruments et normes internationaux relatifs aux droits humains, assurer l'harmonisation des lois nationales avec ces conventions et défendre la primauté des normes internationales.</p>
+            </div>
+
+            <div class="mission-card">
+                <h4>Soutenir les Victimes de Violations</h4>
+                <p>Fournir assistance, conseil et soutien par tous les moyens légaux aux victimes de violations des droits humains, en se constituant potentiellement partie civile dans les affaires judiciaires.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="timeline-header">
+            <h2>Nos Activités Clés et Domaines d'Intervention</h2>
+            <p>Notre travail couvre divers domaines cruciaux, se concentrant sur le plaidoyer, le soutien juridique, l'éducation et la coopération internationale pour défendre les normes des droits humains.</p>
         </div>
 
-        <div class="timeline-section">
-            <div class="timeline-header">
-                <div class="autoShow">
-                    <h2>Nos Activités Clés et Domaines d'Intervention</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Publier et Diffuser des Informations</h4>
+                    <p class="timeline-description">Publier des données, des périodiques, des rapports thématiques (par exemple, sur les élections, la torture) et d'autres documents relatifs aux questions et situations des droits humains.</p>
                 </div>
-                <div class="autoShow">
-                    <p>Notre travail couvre divers domaines cruciaux, se concentrant sur le plaidoyer, le soutien juridique, l'éducation et la coopération internationale pour défendre les normes des droits humains.</p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Plaidoyer auprès des Décideurs Politiques</h4>
+                    <p class="timeline-description">Exercer un plaidoyer auprès des décideurs politiques pour assurer le respect des engagements en matière de droits humains et influencer les changements législatifs.</p>
                 </div>
             </div>
-            <MudTimeline TimelineOrientation="TimelineOrientation.Vertical" TimelinePosition="TimelinePosition.Alternate">
-                @if (missions != null && missions.Count > 6)
-                {
-                    foreach (var mission in missions.Skip(6)) // Display remaining missions in timeline
-                    {
 
-                        <MudTimelineItem Color=Color.Primary Size="Size.Medium">
-                            <ItemOpposite>
-                                <div class="autoShow">
-                                    <MudText Color=Color.Primary Typo="Typo.h6">@mission.Title</MudText>
-                                </div>
-                            </ItemOpposite>
-                            <ItemContent>
-                                <div class="autoShow">
-                                    <div class="mud-timeline-item-content">
-                                        <div class="timeline-content-wrapper">
-                                            <p class="timeline-description">@mission.Description</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ItemContent>
-                        </MudTimelineItem>
-                    }
-                }
-            </MudTimeline>
-
-        </div>
-    </div>
-
-    <div class="cta-section">
-        <div class="cta-content">
-            <div class="autoShow">
-                <h2>Rejoignez-nous pour Faire la Différence</h2>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Coopération Nationale et Internationale</h4>
+                    <p class="timeline-description">Renforcer la solidarité nationale et coopérer/coordonner avec les associations et institutions aux niveaux national, régional et international sur les questions relatives aux droits humains.</p>
+                </div>
             </div>
-            <div class="autoShow">
-                <p>Soutenez l'Organisation Marocaine des Droits Humains. Votre engagement nous aide à surveiller les violations, à plaider pour la justice, à éduquer les communautés et à fournir une assistance vitale aux victimes. Soyez à nos côtés pour les droits humains au Maroc.</p>
-                <button class="BtnPrimary" @onclick="navigateToContact">Engagez-vous</button>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Publier des Rapports Parallèles</h4>
+                    <p class="timeline-description">Publier des rapports parallèles aux soumissions gouvernementales sous la supervision des comités compétents des organes de traités des Nations Unies.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h4 class="timeline-title">Organiser des Événements</h4>
+                    <p class="timeline-description">Organiser des séminaires, des conférences, des galeries d'art et d'autres expositions pour sensibiliser et débattre des sujets relatifs aux droits humains.</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
 </div>
-
-<Footer />
-
-@code {
-    List<Mission> missions;
-
-    protected override async Task OnInitializedAsync()
-    {
-        // Initialize missions based on the provided OMDH documents
-        missions = new List<Mission>
-        {
-            // Derived from 'depliant OMDH-ENG- fin.doc' and 'présentation OMDH ENG.doc'
-            new Mission
-            {
-                Id = 1,
-                Title = "Promouvoir et Protéger les Droits Humains",
-                Description = "Œuvrer pour la promotion, la jouissance et l'exercice des droits humains et des libertés fondamentales, individuelles et collectives, sans discrimination, sur la base des normes universelles." //
-            },
-            // Derived from 'depliant OMDH-ENG- fin.doc' and 'présentation OMDH ENG.doc'
-            new Mission
-            {
-                Id = 2,
-                Title = "Surveiller et Signaler les Violations",
-                Description = "Surveiller activement, exposer, signaler et traiter toutes les violations des droits humains, en publiant des communiqués de presse et des rapports d'enquête." //
-            },
-            // Derived from 'présentation OMDH ENG.doc' and 'depliant OMDH-ENG- fin.doc'
-            new Mission
-            {
-                Id = 3,
-                Title = "Plaider pour l'État de Droit",
-                Description = "Revendiquer le respect constant des droits humains, l'établissement et la consolidation de l'état de droit, la séparation des pouvoirs et le renforcement de l'indépendance et de l'impartialité du pouvoir judiciaire." //
-            },
-             // Derived from 'présentation OMDH ENG.doc' and 'depliant OMDH-ENG- fin.doc'
-            new Mission
-            {
-                Id = 4,
-                Title = "Éducation et Culture des Droits Humains",
-                Description = "Diffuser la culture des droits humains, poursuivre l'éducation à la citoyenneté et sensibiliser la société marocaine et la communauté internationale au respect de ces droits." //
-            },
-            // Derived from 'depliant OMDH-ENG- fin.doc' and 'présentation OMDH ENG.doc'
-            new Mission
-            {
-                Id = 5,
-                Title = "Normes Internationales et Harmonisation",
-                Description = "Appeler à la ratification des instruments et normes internationaux relatifs aux droits humains, assurer l'harmonisation des lois nationales avec ces conventions et défendre la primauté des normes internationales." //
-            },
-            // Derived from 'depliant OMDH-ENG- fin.doc' and 'présentation OMDH ENG.doc'
-            new Mission
-            {
-                Id = 6,
-                Title = "Soutenir les Victimes de Violations",
-                Description = "Fournir assistance, conseil et soutien par tous les moyens légaux aux victimes de violations des droits humains, en se constituant potentiellement partie civile dans les affaires judiciaires." //
-            },
-            // Derived from 'présentation OMDH ENG.doc'
-             new Mission
-            {
-                Id = 7,
-                Title = "Publier et Diffuser des Informations",
-                Description = "Publier des données, des périodiques, des rapports thématiques (par exemple, sur les élections, la torture) et d'autres documents relatifs aux questions et situations des droits humains." //
-            },
-            // Derived from 'depliant OMDH-ENG- fin.doc'
-            new Mission
-            {
-                Id = 8,
-                Title = "Plaidoyer auprès des Décideurs Politiques",
-                Description = "Exercer un plaidoyer auprès des décideurs politiques pour assurer le respect des engagements en matière de droits humains et influencer les changements législatifs." //
-            },
-            // Derived from 'présentation OMDH ENG.doc' and 'depliant OMDH-ENG- fin.doc'
-            new Mission
-            {
-                Id = 9,
-                Title = "Coopération Nationale et Internationale",
-                Description = "Renforcer la solidarité nationale et coopérer/coordonner avec les associations et institutions aux niveaux national, régional et international sur les questions relatives aux droits humains." //
-            },
-              // Derived from 'présentation OMDH ENG.doc'
-             new Mission
-             {
-                 Id = 10,
-                 Title = "Publier des Rapports Parallèles",
-                 Description = "Publier des rapports parallèles aux soumissions gouvernementales sous la supervision des comités compétents des organes de traités des Nations Unies." //
-             },
-               // Derived from 'présentation OMDH ENG.doc'
-             new Mission
-             {
-                 Id = 11,
-                 Title = "Organiser des Événements",
-                 Description = "Organiser des séminaires, des conférences, des galeries d'art et d'autres expositions pour sensibiliser et débattre des sujets relatifs aux droits humains." //
-             }
-              // Note: More missions could be derived or refined based on deeper analysis or specific focus areas needed.
-        };
-        await base.OnInitializedAsync(); // Ensure base initialization occurs
-    }
-
-    void navigateToHome() => NavigationManager.NavigateTo("/");
-    void navigateToContact() => NavigationManager.NavigateTo("/Contact");
-    void navigateToMission() => NavigationManager.NavigateTo("/Missions"); // Current page, might remove/change
-    void navigateToTeam() => NavigationManager.NavigateTo("/Team");
-    void navigateToProjects() => NavigationManager.NavigateTo("/Projects");
-
-    // Define the Mission class structure (assuming it's not defined elsewhere globally)
-    public class Mission
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-    }
-}
