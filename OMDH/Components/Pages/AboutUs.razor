@@ -512,6 +512,217 @@
             max-height: 90%;
             object-fit: contain;
         }
+        .autoShow {
+    animation: autoShowAnimation both;
+    animation-timeline: view(95% 5%);
+}
+
+@@keyframes autoShowAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(200px) scale(0.3);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+/* Responsive adjustments */
+@@media (max-width: 992px) {
+    .timeline-container::after {
+        left: 31px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+        .timeline-item::after {
+            left: 21px;
+        }
+
+    .timeline-right {
+        left: 0;
+    }
+}
+
+@@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+    }
+
+    .cta-container {
+        flex-direction: column;
+    }
+
+    .about-header h1 {
+        font-size: 2rem;
+    }
+
+    .about-text h2 {
+        font-size: 1.5rem;
+    }
+
+    .values-section h2,
+    .team-section h2,
+    .contact-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .stat-item {
+        min-width: 100%;
+    }
+}
+
+@@media (max-width: 576px) {
+    .about-section {
+        padding: 3rem 1rem;
+    }
+
+    .about-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .about-tagline {
+        font-size: 1rem;
+    }
+
+    .value-card,
+    .team-member,
+    .contact-item {
+        min-width: 100%;
+    }
+}
+@@media screen and (max-width: 768px) {
+    .MainCont {
+        padding: 1em;
+        gap: 1.5em;
+    }
+
+    .Sec {
+        width: 100%;
+        padding: 1em;
+    }
+
+        .Sec p {
+            text-align: center;
+            font-size: 0.95em;
+        }
+
+    /* Project grid adjustments */
+    .LatestProjects {
+        justify-content: center;
+    }
+
+    .project {
+        width: 100%;
+        max-width: 350px;
+        height: 20em;
+    }
+
+    /* Timeline section adjustments */
+    .Sec1 {
+        flex-direction: column;
+        padding: 1em;
+    }
+
+    .SLeft {
+        width: 100%;
+        margin-top: 1em;
+        padding: 1em;
+    }
+
+    .SRight {
+        width: 100%;
+        padding: 0;
+    }
+
+    /* Timeline content adjustments */
+    .Projects img {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* Button size adjustments */
+    button {
+        padding: 0.4rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Very small screens */
+@@media screen and (max-width: 480px) {
+    .MainCont {
+        padding: 0.8em;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    .Sec p {
+        font-size: 0.9em;
+    }
+
+    .project {
+        height: 18em;
+    }
+
+    .overlay p {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+    .SLeft p {
+        font-size: 14px;
+    }
+
+        .SLeft p::before {
+            width: 8px;
+            height: 8px;
+        }
+
+    /* Timeline adjustments for very small screens */
+    :deep(.mud-timeline-item-opposite) {
+        width: 25% !important;
+    }
+
+    :deep(.mud-timeline-item-content) {
+        width: 75% !important;
+    }
+
+    :deep(.mud-typography-h5) {
+        font-size: 1.2rem !important;
+    }
+
+    :deep(.mud-typography-h6) {
+        font-size: 1rem !important;
+    }
+
+    :deep(.mud-typography-body1) {
+        font-size: 0.9rem !important;
+    }
+}
+
+/* Fix MudBlazor timeline component display on mobile */
+@@media screen and (max-width: 768px) {
+    :deep(.mud-timeline) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    :deep(.mud-timeline-item) {
+        min-height: auto;
+    }
+
+    :deep(.mud-timeline-item-opposite),
+    :deep(.mud-timeline-item-content) {
+        padding: 8px;
+    }
+}
 </style>
 <section class="about-section">
     <div class="about-container">

@@ -178,6 +178,37 @@
 				opacity: 1;
 
 	}
+	@@media (max-width: 576px) {
+    :root {
+        font-size: 13px; /* Slightly smaller base font size for very small screens */
+    }
+
+    .MainCont {
+        padding: 0.8em; /* Reduced padding for mobile */
+    }
+
+    .Sec {
+        padding: 0.8em; /* Reduced padding for mobile */
+        width: 98%; /* Take up more width to give content more space */
+        gap: 1em; /* Reduce gap between elements in Sec */
+    }
+
+    .project {
+        width: 95%; /* Projects take up almost full width, with a small margin */
+        height: 20em; /* Increased height to accommodate more text */
+    }
+
+    .overlay p {
+        font-size: 0.85em; /* Further reduced text size in overlay for better fit */
+        padding: 0.7em; /* Slightly more padding for text inside overlay */
+    }
+
+    /* Adjust the general paragraph text size in Sec for better readability on small screens */
+    .Sec p {
+        font-size: 0.9em;
+    }
+}
+
 </style>
 
 <Navigation />

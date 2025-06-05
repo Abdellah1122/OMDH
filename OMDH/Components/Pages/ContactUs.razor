@@ -1,231 +1,707 @@
 ﻿@page "/Contact"
-
-@inject NavigationManager NavigationManager
-@inject ISnackbar Snackbar
-
+@layout PagesLayout
 <style>
-    :root {
-        --primary-color: #1957a6;
-        --primary-dark: #174c91;
-        --secondary-color: #d3612f;
-        --secondary-light: #b55227;
-        --accent-color: #e8f0ed;
-        --danger-color: #d84040;
-        --danger-dark: #c53030;
-        --gold-accent: #d4c197;
-        --light-bg: #F5F5F5;
-        --text-dark: #2c3e50;
-        --text-medium: #546e7a;
-        --text-light: white;
-        --border-radius: 6px;
-        --box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-        --transition: all 0.3s ease;
-        --Montsera: "Montserrat", sans-serif;
-        --Poppins: "Poppins", sans-serif;
-        --Roboto: "Roboto", sans-serif;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: var(--Montsera);
-        font-size: 0.99em;
-        transition: var(--transition);
-    }
-
-    body {
-        background-color: var(--light-bg);
-        min-height: 100vh;
-        overflow-x: hidden;
-        color: var(--text-dark);
-    }
-
-    button {
-        font-size: 0.95rem;
-        font-weight: 500;
-        padding: 0.5rem 1.8rem;
-        border-radius: var(--border-radius);
-        border: 1px solid transparent;
-        cursor: pointer;
-        transition: var(--transition);
-        letter-spacing: 0.5px;
-    }
-
-    .BtnPrimary {
-        background-color: var(--primary-color);
-        color: white;
-        border: 1px solid var(--primary-color);
-    }
-
-        .BtnPrimary:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        :root {
+            --primary-color: #1957a6;
+            --primary-dark: #174c91;
+            --secondary-color: #d3612f;
+            --secondary-light: #b55227;
+            --accent-color: #e8f0ed;
+            --danger-color: #d84040;
+            --danger-dark: #c53030;
+            --gold-accent: #d4c197;
+            --light-bg: #F5F5F5;
+            --text-dark: #2c3e50;
+            --text-medium: #546e7a;
+            --text-light: white;
+            --border-radius: 8px;
+            --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --Montserrat: "Montserrat", sans-serif;
+            --Poppins: "Poppins", sans-serif;
+            --Roboto: "Roboto", sans-serif;
         }
 
-    .BtnSuc {
-        background-color: var(--secondary-color);
-        color: white;
-        border: 1px solid var(--secondary-color);
-    }
-
-        .BtnSuc:hover {
-            background-color: var(--secondary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--Montserrat);
+            transition: var(--transition);
         }
 
-    .BtnDanger {
-        background-color: var(--danger-color);
-        color: white;
-        border: 1px solid var(--danger-color);
-    }
-
-        .BtnDanger:hover {
-            background-color: var(--danger-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        body {
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.6;
         }
 
-    .MainCont {
-        display: flex;
-        flex-direction: column;
-        gap: 2em;
-        padding: 2em;
-    }
+        /* Enhanced Button/Link Styles */
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.75rem 2rem;
+            border-radius: var(--border-radius);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .Sec {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 1em;
-        gap: 1.5em;
-    }
+        .btn-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
 
-    .Loader {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 1em;
-    }
-</style>
-<Navigation />
-<div class="MainCont">
-    <div class="OurStory">
-        <div class="image-about">
-            <img src="/Images/Sm.jpg" />
-        </div>
-        <div class="aboutt">
-            <div class="about-title">
-                <h3>N'hésitez pas à nous contacter pour toute question ou assistance.</h3>
+        .btn-link:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(25, 87, 166, 0.3);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-light));
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, var(--secondary-light), var(--secondary-color));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(211, 97, 47, 0.3);
+            color: white;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3em;
+            padding: 2em;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2em;
+            gap: 2em;
+        }
+
+        /* Enhanced Hero Section */
+        .hero-section {
+            display: flex;
+            flex-direction: row;
+            gap: 4em;
+            padding: 3em 2em;
+            background: linear-gradient(135deg, var(--accent-color), rgba(232, 240, 237, 0.7));
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            border-radius: var(--border-radius);
+            object-fit: cover;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2em;
+            text-align: center;
+            padding: 2em;
+        }
+
+        .hero-title {
+            font-family: var(--Poppins);
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            border-radius: 2px;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-medium);
+            margin-bottom: 1.5em;
+            line-height: 1.7;
+        }
+
+        /* Enhanced Social Media Buttons */
+        .social-buttons {
+            display: flex;
+            gap: 1em;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .social-btn:hover::before {
+            transform: scale(1);
+        }
+
+        .social-btn i {
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-btn.linkedin {
+            background: linear-gradient(135deg, #0077b5, #005885);
+        }
+
+        .social-btn.linkedin::before {
+            background: linear-gradient(135deg, #005885, #0077b5);
+        }
+
+        .social-btn.facebook {
+            background: linear-gradient(135deg, #1877f2, #0d5aa7);
+        }
+
+        .social-btn.facebook::before {
+            background: linear-gradient(135deg, #0d5aa7, #1877f2);
+        }
+
+        .social-btn.twitter {
+            background: linear-gradient(135deg, #1da1f2, #0d8bd9);
+        }
+
+        .social-btn.twitter::before {
+            background: linear-gradient(135deg, #0d8bd9, #1da1f2);
+        }
+
+        .social-btn.instagram {
+            background: linear-gradient(135deg, #e4405f, #833ab4, #fd1d1d);
+        }
+
+        .social-btn.instagram::before {
+            background: linear-gradient(135deg, #fd1d1d, #833ab4, #e4405f);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Enhanced Section Headers */
+        h2 {
+            font-family: var(--Poppins);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            text-align: center;
+            margin-bottom: 1em;
+            position: relative;
+        }
+
+        h2::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Enhanced Contact Info Section */
+        .contact-info {
+            background: linear-gradient(135deg, var(--accent-color), rgba(232, 240, 237, 0.8));
+            width: 100%;
+            max-width: 1200px;
+            padding: 3em 2em;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 3em;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2em;
+            width: 100%;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2em;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5em;
+            transition: var(--transition);
+        }
+
+        .contact-card:hover i {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .contact-card p {
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .contact-card .contact-value {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Enhanced Map Section */
+        .map-section {
+            width: 100%;
+            max-width: 1200px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            position: relative;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: var(--border-radius);
+        }
+
+        /* Animations */
+        .auto-show {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .auto-show:nth-child(1) { animation-delay: 0.1s; }
+        .auto-show:nth-child(2) { animation-delay: 0.2s; }
+        .auto-show:nth-child(3) { animation-delay: 0.3s; }
+        .auto-show:nth-child(4) { animation-delay: 0.4s; }
+
+        @@keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating Animation */
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @@keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive Design */
+        @@media (max-width: 768px) {
+            .main-container {
+                padding: 1em;
+                gap: 2em;
+            }
+
+            .hero-section {
+                flex-direction: column;
+                gap: 2em;
+                padding: 2em 1em;
+            }
+
+            .hero-image img {
+                width: 100%;
+                height: 300px;
+            }
+
+            .hero-content {
+                padding: 1em;
+                gap: 1.5em;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .social-buttons {
+                gap: 0.8em;
+            }
+
+            .social-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+
+            .section {
+                padding: 1em;
+                gap: 1.5em;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .contact-info {
+                padding: 2em 1em;
+                gap: 2em;
+            }
+
+            .contact-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5em;
+            }
+
+            .contact-card {
+                padding: 1.5em;
+            }
+
+            .contact-card i {
+                font-size: 2rem;
+            }
+
+            .map-container {
+                height: 400px;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-description {
+                font-size: 0.9rem;
+            }
+
+            h2 {
+                font-size: 1.7rem;
+            }
+
+            .contact-info {
+                padding: 1.5em 1em;
+            }
+
+            .contact-card {
+                padding: 1.2em;
+            }
+
+            .contact-card i {
+                font-size: 1.8rem;
+            }
+
+            .map-container {
+                height: 350px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @@keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section auto-show">
+            <div class="hero-image">
+                <img src="/Images/Sm.jpg" alt="OMDH Contact" class="floating" />
             </div>
-            <div class="about-p">
-                <p>Nos pages sur les réseaux sociaux :</p>
-                <div class="btns">
-                    <button @onclick="NavigateToLinkedin"><i class="bi bi-linkedin"></i></button>
-                    <button @onclick="NavigateToFacebook"><i class="bi bi-facebook"></i></button>
-                    <button @onclick="NavigateToX"><i class="bi bi-twitter-x"></i></button>
-                    <button @onclick="NavigateToInstagram"><i class="bi bi-instagram"></i></button>
+            <div class="hero-content">
+                <h1 class="hero-title">Contactez-Nous</h1>
+                <p class="hero-description">
+                    N'hésitez pas à nous contacter pour toute question ou assistance. 
+                    Nous sommes là pour vous aider et répondre à vos préoccupations concernant les droits humains.
+                </p>
+                <div class="social-section">
+                    <p style="font-weight: 600; color: var(--text-dark); margin-bottom: 1em;">
+                        Suivez-nous sur les réseaux sociaux :
+                    </p>
+                    <div class="social-buttons">
+                        <a href="https://www.linkedin.com/company/omdh-morocco" target="_blank" rel="noopener noreferrer" class="social-btn linkedin" title="LinkedIn">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="https://www.facebook.com/OMDH.Morocco" target="_blank" rel="noopener noreferrer" class="social-btn facebook" title="Facebook">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="https://twitter.com/OMDH_Morocco" target="_blank" rel="noopener noreferrer" class="social-btn twitter" title="Twitter/X">
+                            <i class="bi bi-twitter-x"></i>
+                        </a>
+                        <a href="https://www.instagram.com/omdh_morocco" target="_blank" rel="noopener noreferrer" class="social-btn instagram" title="Instagram">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Contact Information Section -->
+        <section class="section">
+            <div class="auto-show">
+                <h2>Retrouvez-nous</h2>
+            </div>
+            
+            <div class="contact-info auto-show">
+                <div class="contact-cards">
+                    <div class="contact-card auto-show">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <div>
+                            <p><strong>Adresse</strong></p>
+                            <p class="contact-value">
+                                8, rue Ouargha,<br>
+                                Résidence Volubilis, appt 1,<br>
+                                Agdal / Rabat,<br>
+                                Maroc
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card auto-show">
+                        <i class="bi bi-telephone-fill"></i>
+                        <div>
+                            <p><strong>Téléphone Principal</strong></p>
+                            <p class="contact-value">
+                                <a href="tel:+212537770060" style="color: var(--primary-color); text-decoration: none;">
+                                    +212 537 77 00 60
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card auto-show">
+                        <i class="bi bi-phone-fill"></i>
+                        <div>
+                            <p><strong>Mobile</strong></p>
+                            <p class="contact-value">
+                                <a href="tel:+212666947975" style="color: var(--primary-color); text-decoration: none;">
+                                    +212 666 94 79 75
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card auto-show">
+                        <i class="bi bi-envelope-fill"></i>
+                        <div>
+                            <p><strong>Email</strong></p>
+                            <p class="contact-value">
+                                <a href="mailto:admin.omdh@omdh.ma" style="color: var(--primary-color); text-decoration: none;">
+                                    admin.omdh@omdh.ma
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="section">
+            <div class="map-section auto-show">
+                <div class="map-container">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=8%20rue%20Ouargha,%20R%C3%A9sidence%20Volubilis,%20appt%201,%20Agdal%20/%20Rabat,%20Maroc&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="OMDH Location - 8 rue Ouargha, Résidence Volubilis, Agdal, Rabat, Maroc">
+                    </iframe>
+                </div>
+            </div>
+        </section>
     </div>
-  
-    <div class="Sec">
-        <div class="autoShow">
-            <h2>Retrouvez-nous</h2>
-        </div>
-        <div class="find">
-            <div class="iconText">
-                <i class="bi bi-geo"></i>
-                <p>
-                    8, rue Ouargha,
-                    Résidence Volubilis, appt 1,
-                    Agdal / Rabat,
-                    Maroc
-                </p>
-            </div>
-            <div class="iconText">
-                <i class="bi bi-telephone-fill"></i>
-                <p>+212 537 77 00 60</p>
-            </div>
-            <div class="iconText">
-                <i class="bi bi-telephone-fill"></i>
-                <p>+212 666 94 79 75</p>
-            </div>
-            <div class="iconText">
-                <i class="bi bi-envelope"></i>
-                <p>admin.omdh@omdh.ma</p>
-            </div>
-        </div>
-        <div class="autoShow">
-            <div style="width: 92vw; height:80vh;">
-                <iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=8%20rue%20Ouargha,%20R%C3%A9sidence%20Volubilis,%20appt%201,%20Agdal%20/%20Rabat,%20Maroc&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
-            </div>
-        </div>
-    </div>
-</div>
-<Footer />
-@code {
-    public string FirstName = string.Empty;
-    public string LastName = string.Empty;
-    public string PhoneNumber = string.Empty;
-    public string Email = string.Empty;
-    public string Subject = string.Empty;
-    public bool isSending;
 
-   
+    <!-- Footer would go here -->
 
-    private string value1 = string.Empty;
-    private string[] states;
-    private async Task<IEnumerable<string>> Search1(string value, CancellationToken token)
-    {
-        await Task.Delay(5, token);
-        if (string.IsNullOrEmpty(value))
-            return states;
-        return states.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    <script>
+        // Enhanced scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-    }
-    protected override async Task OnInitializedAsync()
-    {
-        states = ["Inquiry", "Volunteer request", "Suggestions"];
-    }
-    private void NavigateToFacebook()
-    {
-        NavigationManager.NavigateTo("https://www.facebook.com", forceLoad: true);
-    }
-    private void NavigateToInstagram()
-    {
-        NavigationManager.NavigateTo("https://www.Instagram.com", forceLoad: true);
-    }
-    private void NavigateToLinkedin()
-    {
-        NavigationManager.NavigateTo("https://www.linkedin.com/", forceLoad: true);
-    }
-    private void NavigateToX()
-    {
-        NavigationManager.NavigateTo("https://www.X.com/", forceLoad: true);
-    }
-    void navigateToHome()
-    {
-        NavigationManager.NavigateTo("/");
-    }
-    void navigateToContact()
-    {
-        NavigationManager.NavigateTo("/Contact");
-    }
-    void navigateToMission()
-    {
-        NavigationManager.NavigateTo("/Mission");
-    }
-    void navigateToTeam()
-    {
-        NavigationManager.NavigateTo("/Team");
-    }
-    void navigateToProjects()
-    {
-        NavigationManager.NavigateTo("/Projects");
-    }
-}
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all auto-show elements
+        document.querySelectorAll('.auto-show').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add loading states for external links
+        document.querySelectorAll('a[target="_blank"]').forEach(link => {
+            link.addEventListener('click', function() {
+                const originalText = this.innerHTML;
+                this.innerHTML = '<span class="loading"></span>';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 1000);
+            });
+        });
+    </script>
