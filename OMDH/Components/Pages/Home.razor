@@ -1,6 +1,5 @@
 ﻿@page "/"
-@inject NavigationManager NavigationManager
-@inject IJSRuntime JSRuntime
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap">
 <style>
     :root {
         --primary-color: #1957a6;
@@ -87,6 +86,17 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
         }
 
+    .btnCar {
+        background-color: #e8f0ed;
+        width: 13em;
+        font-size: 1.2em;
+        color: #2c3e50;
+    }
+
+        .btnCar:hover {
+            background-color: #d4c197;
+        }
+
     .MainContainer {
         display: flex;
         flex-direction: column;
@@ -99,7 +109,11 @@
         z-index: -99;
     }
 
-    /* Carousel styles */
+    /* Hero Carousel styles - Pure CSS */
+    .intro {
+        position: relative;
+    }
+
     .intro-carousel {
         width: 100vw;
         height: 100vh;
@@ -107,11 +121,58 @@
         top: 0;
         left: 0;
         z-index: -1;
+        overflow: hidden;
     }
 
-    .mud-carousel {
-        width: 100% !important;
-        height: 100% !important;
+    .hero-carousel-track {
+        display: flex;
+        width: 400%; /* 4 slides * 100% */
+        height: 100%;
+        animation: heroSlide 20s infinite; /* 5s per slide */
+    }
+
+    @@keyframes heroSlide {
+        0% {
+            transform: translateX(0);
+        }
+
+        20% {
+            transform: translateX(0);
+        }
+
+        25% {
+            transform: translateX(-25%);
+        }
+
+        45% {
+            transform: translateX(-25%);
+        }
+
+        50% {
+            transform: translateX(-50%);
+        }
+
+        70% {
+            transform: translateX(-50%);
+        }
+
+        75% {
+            transform: translateX(-75%);
+        }
+
+        95% {
+            transform: translateX(-75%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .carousel-slide {
+        width: 25%; /* Each slide takes 25% of the track */
+        height: 100%;
+        flex-shrink: 0;
     }
 
     .carousel-content-container {
@@ -148,23 +209,10 @@
         position: relative;
     }
 
-
-
         .img-overlay img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-    .btnCar {
-        background-color: #e8f0ed;
-        width: 13em;
-        font-size: 1.2em;
-        color: #2c3e50;
-    }
-
-        .btnCar:hover {
-            background-color: #d4c197;
         }
 
     .Sec {
@@ -180,227 +228,15 @@
         content: "";
         display: block;
         width: 2em;
-        height: 3px; /* Adjust thickness if needed */
+        height: 3px;
         background-color: var(--secondary-color);
         margin: 5px auto 0;
     }
 
-    .OurStory {
-        display: flex;
-        flex-direction: row;
-        gap: 5em;
-        margin-top: 2em;
-        padding: 0em 1em 0em 0em;
-        background-color: var(--accent-color);
+    /* News Carousel - Pure CSS */
+    .newss {
+        padding: 2em 1em;
     }
-
-    .image-about img {
-        width: 45vw;
-        min-height: 400px;
-        height: auto;
-        border-radius: 3px;
-        object-fit: cover;
-    }
-
-    .aboutt {
-        display: flex;
-        flex-direction: column;
-        margin-top: 5em;
-        gap: 2em;
-    }
-
-    .about-p {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 2em;
-    }
-
-    .Missionss {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        width: 90%;
-        padding: 2em;
-        gap: 1em;
-    }
-
-    .MissionsLeft, .MissionsRight {
-        width: 50%;
-        padding: 0.5em;
-        display: flex;
-        flex-direction: column;
-        gap: 4em;
-    }
-
-    .MissionsRight {
-        margin-top: 4em;
-    }
-
-    .Mission {
-        background-color: var(--accent-color);
-        padding: 1em;
-        border-radius: var(--border-radius);
-        display: flex;
-        flex-direction: column;
-        gap: 0.5em;
-    }
-
-    .Team {
-        padding: 2em;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        gap: 2em;
-    }
-
-    .Member {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        gap: 1em;
-    }
-
-        .Member img {
-            width: 15em; /* Set the fixed width */
-            height: 15em; /* Set the fixed height */
-            border-radius: 50%; /* Makes it a perfect circle */
-            object-fit: cover; /* Ensures the image is properly cropped */
-            display: block;
-            margin: 0 auto;
-            border: 3px solid var(--secondary-color); /* Optional: adds a subtle border */
-        }
-
-    .autoShow {
-        animation: autoShowAnimation both;
-        animation-timeline: view(90% 5%);
-    }
-
-    .MainPartners {
-        width: 100%;
-        height: 12em;
-        padding: 1em;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-        box-shadow: var(--box-shadow);
-    }
-
-        .MainPartners img {
-            width: 10em;
-            height: 10em;
-            box-shadow: var(--box-shadow);
-        }
-
-    .AllPartners {
-        display: flex;
-        flex-direction: row;
-        box-shadow: var(--box-shadow);
-        border-radius: var(--border-radius);
-        width: 100%;
-        padding: 1em 4em;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-        .AllPartners h3 {
-            color: var(--secondary-color);
-        }
-
-    .image-partners {
-        width: 50%;
-        border-radius: var(--border-radius);
-        height: 100%;
-        padding: 1em;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 3em;
-        justify-content: center;
-        align-items: center;
-    }
-
-        .image-partners img {
-            width: 10em;
-            height: 8em;
-            box-shadow: var(--box-shadow);
-            border-radius: 5px;
-        }
-
-            .image-partners img:hover, .MainPartners img:hover {
-                transform: scale(1.02);
-                cursor: pointer;
-            }
-
-    .title {
-        width: 40%;
-        padding: 1em;
-        gap: 1em;
-        display: flex;
-        flex-direction: column;
-    }
-
-
-
-    .news-carousel {
-        width: 100% !important;
-        height: 800px !important;
-        box-shadow: var(--box-shadow);
-        border-radius: var(--border-radius);
-    }
-
-    .news-item {
-        display: flex;
-        flex-direction: row;
-        height: 100%;
-        background-color: white;
-        border-radius: var(--border-radius);
-        overflow: hidden;
-    }
-
-    .news-image {
-        width: 60%;
-        height: 100%;
-    }
-
-        .news-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-    .news-text {
-        width: 40%;
-        padding: 5em;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 1.5rem;
-    }
-
-        .news-text h2 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            text-align: left;
-        }
-
-            .news-text h2::after {
-                content: "";
-                display: block;
-                width: 2em;
-                height: 3px;
-                background-color: var(--secondary-color);
-                margin: 5px 0 0;
-            }
-
-        .news-text p {
-            line-height: 1.6;
-            color: var(--text-medium);
-            text-align: left;
-        }
 
     .news-carousel-container {
         width: 100%;
@@ -408,10 +244,54 @@
     }
 
     .news-carousel {
-        width: 100% !important;
-        height: 600px !important;
+        width: 100%;
+        height: 600px;
         box-shadow: var(--box-shadow);
         border-radius: var(--border-radius);
+        overflow: hidden;
+    }
+
+    .news-carousel-track {
+        display: flex;
+        width: 300%; /* 3 slides * 100% */
+        height: 100%;
+        animation: newsSlide 21s infinite; /* 7s per slide */
+    }
+
+    @@keyframes newsSlide {
+        0% {
+            transform: translateX(0);
+        }
+
+        30% {
+            transform: translateX(0);
+        }
+
+        33.33% {
+            transform: translateX(-33.33%);
+        }
+
+        63.33% {
+            transform: translateX(-33.33%);
+        }
+
+        66.66% {
+            transform: translateX(-66.66%);
+        }
+
+        96.66% {
+            transform: translateX(-66.66%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .news-slide {
+        width: 33.33%; /* Each slide takes 33.33% of the track */
+        height: 100%;
+        flex-shrink: 0;
     }
 
     .news-item {
@@ -482,9 +362,91 @@
         margin-bottom: -1em;
     }
 
-    .news-button {
-        align-self: flex-start;
-        margin-top: 1em;
+    /* Partner Sliders */
+    .slider, .slider2, .slider3 {
+        width: 90%;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+        background-color: var(--accent-color);
+        padding: 1em;
+        height: 11em;
+        display: flex;
+        align-items: center;
+    }
+
+    .slide-track, .slide-track2, .slide-track3 {
+        display: flex;
+        animation: scroll 40s linear infinite;
+        gap: 1em;
+        animation-play-state: running;
+    }
+
+    @@keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .slide, .slide2, .slide3 {
+        flex-shrink: 0;
+        width: 18em;
+        height: 10em;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .slide img, .slide2 img, .slide3 img {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            height: 10em;
+            width: auto;
+            object-fit: contain;
+        }
+
+    /* Our Story Section */
+    .OurStory {
+        display: flex;
+        flex-direction: row;
+        gap: 5em;
+        margin-top: 2em;
+        padding: 0em 1em 0em 0em;
+        background-color: var(--accent-color);
+        align-items: center;
+    }
+
+    .image-about img {
+        width: 45vw;
+        min-height: 400px;
+        height: auto;
+        border-radius: 3px;
+        object-fit: cover;
+    }
+
+    .aboutt {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5em;
+        gap: 2em;
+    }
+
+    .about-p {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2em;
+    }
+
+    /* Timeline Section */
+    .timeline-section {
+        width: 100%;
     }
 
     .Projects {
@@ -500,118 +462,539 @@
         margin: 0 auto;
     }
 
-        .Projects img {
+    .custom-timeline {
+        position: relative;
+        padding: 2em 0;
+        width: 100%;
+    }
+
+        .custom-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--primary-color);
+            transform: translateX(-50%);
+        }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 3em;
+        width: 100%;
+    }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: 0;
+            margin-right: 55%;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+            margin-right: 0;
+            text-align: left;
+        }
+
+    .timeline-content {
+        background-color: white;
+        padding: 1.5em;
+        border-radius: var(--border-radius);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+        position: relative;
+    }
+
+        .timeline-content:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+    .timeline-dot {
+        position: absolute;
+        left: 50%;
+        top: 1.5em;
+        width: 16px;
+        height: 16px;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 0 0 4px rgba(25, 87, 166, 0.2);
+        z-index: 2;
+    }
+
+    .timeline-year {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5em;
+    }
+
+        .timeline-year.primary {
+            color: var(--primary-color);
+        }
+
+        .timeline-year.secondary {
+            color: var(--secondary-color);
+        }
+
+    .timeline-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5em;
+    }
+
+        .timeline-title.primary {
+            color: var(--primary-color);
+        }
+
+        .timeline-title.secondary {
+            color: var(--secondary-color);
+        }
+
+    .timeline-description {
+        color: var(--text-dark);
+        line-height: 1.6;
+        margin-bottom: 1em;
+    }
+
+    .Projects img {
+        width: 100%;
+        max-width: 20em;
+        margin-top: 1em;
+        border-radius: var(--border-radius);
+        height: auto;
+    }
+
+    /* Map Section */
+    .finddd {
+        padding: 1em 0 0 0;
+    }
+
+    .map-container {
+        width: 92vw;
+        height: 80vh;
+    }
+
+        .map-container iframe {
             width: 100%;
-            max-width: 20em;
-            margin-top: 1em;
+            height: 600px;
+            border: none;
+        }
+
+    /* Animations */
+    .autoShow {
+        animation: autoShowAnimation both;
+        animation-timeline: view(90% 5%);
+    }
+
+    @@keyframes autoShowAnimation {
+        from {
+            opacity: 0;
+            transform: translateY(200px) scale(0.3);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    /* Pause animations on hover for better UX */
+    .hero-carousel-track:hover,
+    .news-carousel-track:hover {
+        animation-play-state: paused;
+    }
+
+    /* Responsive Design */
+    @@media (max-width: 768px) {
+        body {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .MainContainer {
+            gap: 2em;
+        }
+
+        .Sec {
+            padding: 2em 1em;
+            gap: 1.5em;
+        }
+
+        h1, .h1 {
+            font-size: 2rem;
+        }
+
+        h2, .h2 {
+            font-size: 1.75rem;
+        }
+
+        h3, .h3 {
+            font-size: 1.4rem;
+        }
+
+        p {
+            font-size: 0.95rem;
+        }
+
+        h2::after {
+            margin: 0.4em auto 0;
+            width: 2.5em;
+            height: 3px;
+        }
+
+        .news-text h2::after {
+            margin: 0.4em 0 0;
+        }
+
+        button, .BtnPrimary, .BtnSuc, .BtnDanger, .btnCar {
+            padding: 0.7em 1.3em;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+
+        .carousel-overlay {
+            width: 90%;
+            bottom: 8%;
+            padding: 1em;
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: var(--border-radius);
+        }
+
+            .carousel-overlay p {
+                font-size: 0.95rem;
+                margin-bottom: 0.8em;
+                color: white;
+            }
+
+        .btnCar {
+            font-size: 0.9rem;
+        }
+
+        .OurStory {
+            flex-direction: column;
+            gap: 1.5em;
+            padding: 1.5em;
+            margin-top: 1.5em;
+        }
+
+        .image-about img {
+            width: 100%;
+            min-height: unset;
+            height: auto;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+        }
+
+        .aboutt {
+            margin-top: 0;
+            gap: 1em;
+            text-align: center;
+            align-items: center;
+        }
+
+        .about-p {
+            gap: 1em;
+            align-items: center;
+        }
+
+            .about-p .BtnPrimary {
+                width: auto;
+                max-width: 280px;
+            }
+
+        .news-item {
+            flex-direction: column;
             height: auto;
         }
 
-</style>
+        .news-image {
+            width: 100%;
+            order: 1;
+            padding: 0 !important;
+            height: auto;
+            line-height: 0;
+        }
 
-<Nav />
+            .news-image img {
+                width: 100%;
+                height: auto;
+                display: block;
+                max-height: 350px;
+                object-fit: cover;
+                border-top-left-radius: var(--border-radius);
+                border-top-right-radius: var(--border-radius);
+            }
+
+        .news-text {
+            width: 100%;
+            order: 2;
+            padding: 1.5em;
+            gap: 0.8em;
+        }
+
+        .news-date {
+            font-size: 0.8rem;
+            margin-bottom: 0;
+        }
+
+        .news-text h2 {
+            font-size: 1.3rem;
+            line-height: 1.3;
+        }
+
+        .news-text p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .custom-timeline::before {
+            left: 20px;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content,
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 50px;
+            margin-right: 0;
+            text-align: left;
+        }
+
+        .timeline-dot {
+            left: 20px;
+        }
+
+        .Projects {
+            padding: 0;
+            width: 100%;
+        }
+
+            .Projects img {
+                width: 100%;
+                max-width: 300px;
+                height: auto;
+                margin-top: 0.5em;
+                border-radius: var(--border-radius);
+            }
+
+        .map-container {
+            width: 100%;
+            height: 50vh;
+        }
+
+        .slider .slide img, .slider2 .slide2 img, .slider3 .slide3 img {
+            max-width: 120px;
+            height: 60px;
+            object-fit: contain;
+            margin: 0 15px;
+        }
+
+        .slider, .slider2, .slider3 {
+            height: 80px;
+            margin-bottom: 1em;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        body {
+            font-size: 14px;
+        }
+
+        .Sec {
+            padding: 1.5em 0.8em;
+        }
+
+        h1, .h1 {
+            font-size: 1.8rem;
+        }
+
+        h2, .h2 {
+            font-size: 1.5rem;
+        }
+
+        h3, .h3 {
+            font-size: 1.25rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        button, .BtnPrimary, .BtnSuc, .BtnDanger, .btnCar {
+            padding: 0.6em 1em;
+            font-size: 0.85rem;
+        }
+
+        .carousel-overlay p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .carousel-overlay {
+            bottom: 5%;
+        }
+
+        .image-about img {
+            max-height: 250px;
+        }
+
+        .aboutt {
+            text-align: left;
+        }
+
+        .about-p {
+            align-items: flex-start;
+        }
+
+            .about-p .BtnPrimary {
+                align-self: flex-start;
+            }
+
+        .slider .slide img, .slider2 .slide2 img, .slider3 .slide3 img {
+            max-width: 90px;
+            height: 50px;
+            margin: 0 10px;
+        }
+
+        .slider, .slider2, .slider3 {
+            height: 70px;
+        }
+
+        .news-image img {
+            max-height: 280px;
+        }
+
+        .news-text {
+            padding: 1em;
+        }
+
+            .news-text h2 {
+                font-size: 1.15rem;
+            }
+
+            .news-text p {
+                font-size: 0.85rem;
+            }
+
+        .Projects img {
+            max-width: 260px;
+        }
+
+        .map-container {
+            height: 45vh;
+        }
+    }
+</style>
+<Navigation />
+
+<!-- Hero Carousel -->
 <div class="intro">
     <div class="intro-carousel">
-        <MudCarousel Class="mud-width-full" AutoCycle="@autocycle" TData="object">
-            <MudCarouselItem Transition="transition">
+        <div class="hero-carousel-track">
+            <div class="carousel-slide">
                 <div class="carousel-content-container">
                     <div class="img-overlay">
-                        <img src="/Images/Kids.jpg" />
+                        <img src="/Images/Kids.jpg" alt="Kids" />
                     </div>
                     <div class="carousel-overlay">
                         <p>Explorez nos dernières initiatives et découvrez en avant-première les événements impactants qui nous attendent. Rejoignez-nous dans la défense des droits humains et soyez parmi les premiers à nous soutenir pour le changement.</p>
                     </div>
                 </div>
-            </MudCarouselItem>
-            <MudCarouselItem Transition="transition">
+            </div>
+            <div class="carousel-slide">
                 <div class="carousel-content-container">
                     <div class="img-overlay">
-                        <img src="/Images/Peace-Pigeon.jpg" />
+                        <img src="/Images/Peace-Pigeon.jpg" alt="Peace Pigeon" />
                     </div>
-
                     <div class="carousel-overlay">
                         <p>Découvrez notre mission et voyez comment nous travaillons chaque jour pour défendre la dignité humaine, promouvoir la justice et créer un changement durable.</p>
                     </div>
                 </div>
-            </MudCarouselItem>
-            <MudCarouselItem Transition="transition">
+            </div>
+            <div class="carousel-slide">
                 <div class="carousel-content-container">
                     <div class="img-overlay">
-                        <img src="/Images/Hand-solitarity.jpg" />
+                        <img src="/Images/Hand-solitarity.jpg" alt="Hand Solidarity" />
                     </div>
                     <div class="carousel-overlay">
                         <p>Explorez tous nos projets et découvrez comment chaque initiative nous rapproche d'un monde où les droits humains sont respectés pour tous !</p>
                     </div>
                 </div>
-            </MudCarouselItem>
-            <MudCarouselItem Transition="transition">
+            </div>
+            <div class="carousel-slide">
                 <div class="carousel-content-container">
                     <div class="img-overlay">
-                        <img src="/Images/CandleInHand.jpg" />
+                        <img src="/Images/CandleInHand.jpg" alt="Candle in Hand" />
                     </div>
                     <div class="carousel-overlay">
                         <p>Explorez nos dernières initiatives et découvrez en avant-première les événements impactants qui nous attendent. Rejoignez-nous dans la défense des droits humains et soyez parmi les premiers à nous soutenir pour le changement.</p>
                     </div>
                 </div>
-            </MudCarouselItem>
-        </MudCarousel>
-    </div>
-</div>
-<div class="MainContainer">
-    <div class="Void">
-    </div>
-    <div class="newss" style="padding:2em 1em;">
-        <div class="news-carousel-container">
-            <MudCarousel Class="news-carousel" ShowArrows="@arrows" ShowBullets="true" AutoCycle="@autocycle" TData="object">
-                <MudCarouselItem Transition="transition">
-                    <div class="news-item">
-                        <div class="news-text">
-                            <span class="news-date">25-26-27 avril 2025</span>
-                            <h2>12ème Conférence Nationale de l'OMDH sur les Droits Humains et le Changement Global</h2>
-                            <p>
-                                تكرم المنظمة المغربية لحقوق الإنسان مؤسسيها والمساهمين فيها بدعوتهم للمشاركة في الندوات والجلسات الافتتاحية لمؤتمراتها.
-
-                                ويبحث مؤتمرها الوطني الثاني عشر في الرباط موضوع ”فعالية حقوق الإنسان في مواجهة التحولات الدولية الراهنة“، ويبدأ بندوة حول الحقوق الاقتصادية والاجتماعية والثقافية في السياسة العامة.
-                            </p>
-                        </div>
-                        <div class="news-image" style="padding:2em;">
-                            <img src="/Images/New Project.jpg" alt="Événement de Bal de Charité" />
-                        </div>
-                    </div>
-                </MudCarouselItem>
-                <MudCarouselItem Transition="transition">
-                    <div class="news-item">
-                        <div class="news-text">
-                            <span class="news-date">6 mai 2025</span>
-                            <h2>Conférence de Presse de l'OMDH sur les Résultats de la 12ème Conférence Nationale des Droits Humains</h2>
-                            <p>
-                                في 6 مايو 2025، عقدت المنظمة المغربية لحقوق الإنسان مؤتمراً صحفياً في الرباط لعرض نتائج مؤتمرها الوطني الثاني عشر حول ”فعالية حقوق الإنسان في مواجهة التحولات الدولية الراهنة“.
-                                وتقاسمت الإدارة الاستنتاجات والتوصيات، وحللت السياقات الوطنية والدولية، وأجابت على أسئلة وسائل الإعلام حول مواقفها من التحديات الراهنة لحقوق الإنسان.
-                            </p>
-                        </div>
-                        <div class="news-image">
-                            <img src="/Images/News2.jpg" alt="Résultats d'Enquête" />
-                        </div>
-                    </div>
-                </MudCarouselItem>
-                <MudCarouselItem Transition="transition">
-                    <div class="news-item">
-                        <div class="news-text">
-                            <span class="news-date">18 mai 2025</span>
-                            <h2>Le Conseil National de l'OMDH se Réunit Suite à la 12ème Conférence, Rend Hommage aux Êtres Chers Disparus</h2>
-                            <p>
-                                في 18 مايو 2025، عقدت المنظمة المغربية لحقوق الإنسان الجلسة الأولى لمجلسها الوطني لوضع اللمسات الأخيرة على جدول أعمال مؤتمرها الوطني الثاني عشر. بدأ الاجتماع بالوقوف دقيقة صمت حدادًا على روح أنس بوعيش ووالدة الأستاذ عبد الرزاق وئام.
-                            </p>
-                        </div>
-                        <div class="news-image">
-                            <img src="/Images/News3.jpg" alt="Initiative de Paix" />
-                        </div>
-                    </div>
-                </MudCarouselItem>
-            </MudCarousel>
+            </div>
         </div>
     </div>
+</div>
+
+<div class="MainContainer">
+    <div class="Void"></div>
+
+    <!-- News Section -->
+    <div class="newss">
+        <div class="news-carousel-container">
+            <div class="news-carousel">
+                <div class="news-carousel-track">
+                    <div class="news-slide">
+                        <div class="news-item">
+                            <div class="news-text">
+                                <span class="news-date">25-26-27 avril 2025</span>
+                                <h2>12ème Conférence Nationale de l'OMDH sur les Droits Humains et le Changement Global</h2>
+                                <p>
+                                    تكرم المنظمة المغربية لحقوق الإنسان مؤسسيها والمساهمين فيها بدعوتهم للمشاركة في الندوات والجلسات الافتتاحية لمؤتمراتها.
+
+                                    ويبحث مؤتمرها الوطني الثاني عشر في الرباط موضوع "فعالية حقوق الإنسان في مواجهة التحولات الدولية الراهنة"، ويبدأ بندوة حول الحقوق الاقتصادية والاجتماعية والثقافية في السياسة العامة.
+                                </p>
+                            </div>
+                            <div class="news-image" style="padding:2em;">
+                                <img src="/Images/New Project.jpg" alt="Événement de Bal de Charité" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-slide">
+                        <div class="news-item">
+                            <div class="news-text">
+                                <span class="news-date">6 mai 2025</span>
+                                <h2>Conférence de Presse de l'OMDH sur les Résultats de la 12ème Conférence Nationale des Droits Humains</h2>
+                                <p>
+                                    في 6 مايو 2025، عقدت المنظمة المغربية لحقوق الإنسان مؤتمراً صحفياً في الرباط لعرض نتائج مؤتمرها الوطني الثاني عشر حول "فعالية حقوق الإنسان في مواجهة التحولات الدولية الراهنة".
+                                    وتقاسمت الإدارة الاستنتاجات والتوصيات، وحللت السياقات الوطنية والدولية، وأجابت على أسئلة وسائل الإعلام حول مواقفها من التحديات الراهنة لحقوق الإنسان.
+                                </p>
+                            </div>
+                            <div class="news-image">
+                                <img src="/Images/News2.jpg" alt="Résultats d'Enquête" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-slide">
+                        <div class="news-item">
+                            <div class="news-text">
+                                <span class="news-date">18 mai 2025</span>
+                                <h2>Le Conseil National de l'OMDH se Réunit Suite à la 12ème Conférence, Rend Hommage aux Êtres Chers Disparus</h2>
+                                <p>
+                                    في 18 مايو 2025، عقدت المنظمة المغربية لحقوق الإنسان الجلسة الأولى لمجلسها الوطني لوضع اللمسات الأخيرة على جدول أعمال مؤتمرها الوطني الثاني عشر. بدأ الاجتماع بالوقوف دقيقة صمت حدادًا على روح أنس بوعيش ووالدة الأستاذ عبد الرزاق وئام.
+                                </p>
+                            </div>
+                            <div class="news-image">
+                                <img src="/Images/News3.jpg" alt="Initiative de Paix" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- International Partners -->
     <div class="Sec">
         <div class="autoShow">
             <h2>Partenaires Internationaux :</h2>
@@ -622,8 +1005,7 @@
                 <div class="slide"><img src="intPartnaires/Amnesty_International_logo.svg.png" /></div>
                 <div class="slide"><img src="intPartnaires/LC-Logo-thumbnail-980x551-1-400x250.jpg" /></div>
                 <div class="slide"><img src="intPartnaires/WORLD_REPORT_2023_OF_HUMAN_RIGHTS_WATCH_0.png" /></div>
-
-                <!-- Dupliquer les diapositives pour une boucle fluide -->
+                <!-- Duplicate for smooth loop -->
                 <div class="slide"><img src="intPartnaires/28JUN-ECOSOC-LOGO-BLOG.png" /></div>
                 <div class="slide"><img src="intPartnaires/Amnesty_International_logo.svg.png" /></div>
                 <div class="slide"><img src="intPartnaires/LC-Logo-thumbnail-980x551-1-400x250.jpg" /></div>
@@ -631,6 +1013,8 @@
             </div>
         </div>
     </div>
+
+    <!-- National Partners -->
     <div class="Sec">
         <div class="autoShow">
             <h2>Partenaires Nationaux :</h2>
@@ -643,9 +1027,7 @@
                 <div class="slide2"><img src="NatPartnaires/images (2).png" /></div>
                 <div class="slide2"><img src="NatPartnaires/images.jpeg" /></div>
                 <div class="slide2"><img src="NatPartnaires/images.png" /></div>
-
-
-                <!-- Dupliquer les diapositives pour une boucle fluide -->
+                <!-- Duplicate for smooth loop -->
                 <div class="slide2"><img src="NatPartnaires/ensemble-contre-la-peine-de-mort-ecpm-morocco-417461.jpg" /></div>
                 <div class="slide2"><img src="NatPartnaires/images (1).jpeg" /></div>
                 <div class="slide2"><img src="NatPartnaires/images (1).png" /></div>
@@ -655,6 +1037,8 @@
             </div>
         </div>
     </div>
+
+    <!-- University Partners -->
     <div class="Sec">
         <div class="autoShow">
             <h2>Partenaires Universitaires :</h2>
@@ -670,7 +1054,7 @@
                 <div class="slide3"><img src="UNIPartnaires/Mohammed_V_University_Logo.png" /></div>
                 <div class="slide3"><img src="UNIPartnaires/universite-abdelmalek-essaadi-900x420-1.png" /></div>
                 <div class="slide3"><img src="UNIPartnaires/Universite-Hassan-1er-settat.png" /></div>
-                <!-- Dupliquer les diapositives pour une boucle fluide -->
+                <!-- Duplicate for smooth loop -->
                 <div class="slide3"><img src="UNIPartnaires/1631365508628.jpeg" /></div>
                 <div class="slide3"><img src="UNIPartnaires/images (3).png" /></div>
                 <div class="slide3"><img src="UNIPartnaires/images.jpeg" /></div>
@@ -684,12 +1068,10 @@
         </div>
     </div>
 
-
-    @*Notre Histoire*@
-
+    <!-- Our Story -->
     <div class="OurStory">
         <div class="image-about">
-            <img src="/Images/Kids.jpg" />
+            <img src="/Images/Kids.jpg" alt="Kids" />
         </div>
         <div class="autoShow">
             <div class="aboutt">
@@ -700,167 +1082,130 @@
                 </div>
                 <div class="about-p">
                     <p>Au cœur de notre mission réside un engagement inébranlable envers la justice, l'égalité et la protection des droits humains fondamentaux. Nous plaidons pour la dignité et les libertés de tous les individus, nous efforçant de créer un monde où chaque voix est entendue, chaque droit est respecté, et chaque personne est habilitée à vivre sans peur ni oppression.</p>
-                    <button class="BtnPrimary" @onclick="navigateToProjects">Explorez Plus</button>
+                    <button class="BtnPrimary">Explorez Plus</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Timeline Section -->
     <div class="timeline-section">
         <div class="Sec">
             <div class="Projects">
                 <h2>Découvrez Nos Étapes Clés</h2>
-                <MudTimeline>
-                    <MudTimelineItem Style="color:black;" Size="Size.Small">
-                        <ItemOpposite>
-                            <MudText Style="color: var(--primary-color);" Typo="Typo.h5">1988</MudText>
-                        </ItemOpposite>
-                        <ItemContent>
+                <div class="custom-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year primary">1988</div>
                             <div class="autoShow">
-                                <MudText Style="color: var(--primary-color);" Typo="Typo.h6" GutterBottom="true">Fondation de l'OMDH</MudText>
+                                <div class="timeline-title primary">Fondation de l'OMDH</div>
                             </div>
                             <div class="autoShow">
-                                <MudText>L'Organisation Marocaine des Droits Humains (OMDH) a été officiellement fondée le 28 mai 1988, à Agdal, Rabat, dans le but de sensibiliser aux droits humains et de défendre les victimes de violations.</MudText>
+                                <div class="timeline-description">L'Organisation Marocaine des Droits Humains (OMDH) a été officiellement fondée le 28 mai 1988, à Agdal, Rabat, dans le but de sensibiliser aux droits humains et de défendre les victimes de violations.</div>
                             </div>
                             <div class="autoShow">
-                                <img src="/Images/HandsSolidarity.jpg" />
+                                <img src="/Images/HandsSolidarity.jpg" alt="Hands Solidarity" />
                             </div>
-                        </ItemContent>
-                    </MudTimelineItem>
+                        </div>
+                    </div>
 
-                    <MudTimelineItem Style="color:black;" Size="Size.Small">
-                        <ItemOpposite>
-                            <MudText Style="color: var(--secondary-color);" Typo="Typo.h5">Début 1989</MudText>
-                        </ItemOpposite>
-                        <ItemContent>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year secondary">Début 1989</div>
                             <div class="autoShow">
-                                <MudText Style="color: var(--secondary-color);" Typo="Typo.h6" GutterBottom="true">Plaidoyer pour l'Amnistie</MudText>
+                                <div class="timeline-title secondary">Plaidoyer pour l'Amnistie</div>
                             </div>
                             <div class="autoShow">
-                                <MudText>L'OMDH a lancé des appels à l'amnistie pour les prisonniers politiques et soumis des demandes de visite des prisons dans le cadre de ses efforts initiaux.</MudText>
+                                <div class="timeline-description">L'OMDH a lancé des appels à l'amnistie pour les prisonniers politiques et soumis des demandes de visite des prisons dans le cadre de ses efforts initiaux.</div>
                             </div>
                             <div class="autoShow">
-                                <img src="/Images/AmnestyInternational.jpg" />
+                                <img src="/Images/AmnestyInternational.jpg" alt="Amnesty International" />
                             </div>
-                        </ItemContent>
-                    </MudTimelineItem>
+                        </div>
+                    </div>
 
-                    <MudTimelineItem Style="color:black;" Size="Size.Small">
-                        <ItemOpposite>
-                            <MudText Style="color: var(--primary-color);" Typo="Typo.h5">1997</MudText>
-                        </ItemOpposite>
-                        <ItemContent>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year primary">1997</div>
                             <div class="autoShow">
-                                <MudText Style="color: var(--primary-color);" Typo="Typo.h6" GutterBottom="true">Intégration Régionale</MudText>
+                                <div class="timeline-title primary">Intégration Régionale</div>
                             </div>
                             <div class="autoShow">
-                                <MudText>L'OMDH est devenu membre régulier du réseau EuroMed Rights, indiquant son engagement dans les cadres régionaux des droits humains.</MudText>
+                                <div class="timeline-description">L'OMDH est devenu membre régulier du réseau EuroMed Rights, indiquant son engagement dans les cadres régionaux des droits humains.</div>
                             </div>
                             <div class="autoShow">
-                                <img src="/Images/blue.png" />
+                                <img src="/Images/blue.png" alt="Blue" />
                             </div>
-                        </ItemContent>
-                    </MudTimelineItem>
+                        </div>
+                    </div>
 
-                    <MudTimelineItem Style="color:black;" Size="Size.Small">
-                        <ItemOpposite>
-                            <MudText Style="color: var(--secondary-color);" Typo="Typo.h5">2011</MudText>
-                        </ItemOpposite>
-                        <ItemContent>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year secondary">2011</div>
                             <div class="autoShow">
-                                <MudText Style="color: var(--secondary-color);" Typo="Typo.h6" GutterBottom="true">Alliance Anti-Torture</MudText>
+                                <div class="timeline-title secondary">Alliance Anti-Torture</div>
                             </div>
                             <div class="autoShow">
-                                <MudText>L'OMDH a collaboré avec le Conseil National des Droits de l'Homme (CNDH) et l'Association pour la Prévention de la Torture (APT) sur la ratification du Protocole Facultatif à la Convention des Nations Unies contre la Torture (OPCAT).</MudText>
+                                <div class="timeline-description">L'OMDH a collaboré avec le Conseil National des Droits de l'Homme (CNDH) et l'Association pour la Prévention de la Torture (APT) sur la ratification du Protocole Facultatif à la Convention des Nations Unies contre la Torture (OPCAT).</div>
                             </div>
                             <div class="autoShow">
-                                <img src="/Images/CNDH.jpg" />
+                                <img src="/Images/CNDH.jpg" alt="CNDH" />
                             </div>
-                        </ItemContent>
-                    </MudTimelineItem>
+                        </div>
+                    </div>
 
-                    <MudTimelineItem Style="color:black;" Size="Size.Small">
-                        <ItemOpposite>
-                            <MudText Style="color: var(--primary-color);" Typo="Typo.h5">2013</MudText>
-                        </ItemOpposite>
-                        <ItemContent>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year primary">2013</div>
                             <div class="autoShow">
-                                <MudText Style="color: var(--primary-color);" Typo="Typo.h6" GutterBottom="true">Condamnation de l'Injustice</MudText>
+                                <div class="timeline-title primary">Condamnation de l'Injustice</div>
                             </div>
                             <div class="autoShow">
-                                <MudText>L'OMDH a publié conjointement avec Ensemble Contre la Peine de Mort (ECPM) un rapport intitulé « Voyage au cimetière des vivants », qui analysait les conditions de détention des personnes condamnées à mort au Maroc.</MudText>
+                                <div class="timeline-description">L'OMDH a publié conjointement avec Ensemble Contre la Peine de Mort (ECPM) un rapport intitulé « Voyage au cimetière des vivants », qui analysait les conditions de détention des personnes condamnées à mort au Maroc.</div>
                             </div>
                             <div class="autoShow">
-                                <img src="/Images/DeathPenaltyAbolition.jpg" />
+                                <img src="/Images/DeathPenaltyAbolition.jpg" alt="Death Penalty Abolition" />
                             </div>
-                        </ItemContent>
-                    </MudTimelineItem>
-                    <MudTimelineItem Style="color:black;" Size="Size.Small">
-                        <ItemOpposite>
-                            <MudText Style="color: var(--primary-color);" Typo="Typo.h5">Avril 2025</MudText>
-                        </ItemOpposite>
-                        <ItemContent>
-                            <div class="autoShow">
-                                <MudText Style="color: var(--primary-color);" Typo="Typo.h6" GutterBottom="true">Solidarité avec Gaza</MudText>
-                            </div>
-                            <div class="autoShow">
-                                <MudText>Lors de sa douzième conférence nationale, l'OMDH a exprimé sa solidarité avec le peuple palestinien et condamné l'agression israélienne en cours à Gaza, appelant à une intervention internationale.</MudText>
-                            </div>
-                            <div class="autoShow">
-                                <img src="/Images/gaza.jpg" />
-                            </div>
-                        </ItemContent>
-                    </MudTimelineItem>
-                </MudTimeline>
+                        </div>
+                    </div>
 
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-year primary">Avril 2025</div>
+                            <div class="autoShow">
+                                <div class="timeline-title primary">Solidarité avec Gaza</div>
+                            </div>
+                            <div class="autoShow">
+                                <div class="timeline-description">Lors de sa douzième conférence nationale, l'OMDH a exprimé sa solidarité avec le peuple palestinien et condamné l'agression israélienne en cours à Gaza, appelant à une intervention internationale.</div>
+                            </div>
+                            <div class="autoShow">
+                                <img src="/Images/gaza.jpg" alt="Gaza" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-
+    <!-- Map Section -->
     <div class="finddd">
         <div class="Sec">
             <div class="autoShow">
                 <h2>Nous Trouver</h2>
             </div>
             <div class="autoShow">
-                <div style="width: 92vw; height:80vh;">
-                    <iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=8%20,%20rue%20Ouargha%20,%20R%C3%A9sidence%20volubilis,%20appt%201%20,%20Agdal%20/Rabat%C2%A0,%C2%A0Maroc+(OMDH%20)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a href="https://www.gps.ie/collections/personal-trackers/">Traceurs personnels</a></iframe>
+                <div class="map-container">
+                    <iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=8%20,%20rue%20Ouargha%20,%20R%C3%A9sidence%20volubilis,%20appt%201%20,%20Agdal%20/Rabat%C2%A0,%C2%A0Maroc+(OMDH%20)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
                 </div>
-
-
             </div>
         </div>
-
     </div>
 </div>
 <Footer />
-
-
-@code {
-    private bool arrows = true;
-    private bool bullets = false;
-    private bool autocycle = true;
-    private Transition transition = Transition.Fade;
-
-    void navigateToHome()
-    {
-        NavigationManager.NavigateTo("/");
-    }
-    void navigateToContact()
-    {
-        NavigationManager.NavigateTo("/Contact");
-    }
-    void navigateToMission()
-    {
-        NavigationManager.NavigateTo("/Mission");
-    }
-    void navigateToTeam()
-    {
-        NavigationManager.NavigateTo("/Team");
-    }
-    void navigateToProjects()
-    {
-        NavigationManager.NavigateTo("/Projects");
-    }
-}
