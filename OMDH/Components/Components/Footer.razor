@@ -1,6 +1,5 @@
 ﻿@using System.Text.RegularExpressions
 @inject NavigationManager NavigationManager
-@inject NewsLetterService NewsLetterService
 @inject ISnackbar Snackbar
 
 <style>
@@ -303,44 +302,7 @@
     private string Nom = string.Empty;
     private string Email = string.Empty;
 
-    private async Task Subscribe()
-    {
-        // Email Regex: basic RFC 5322 compliant version
-        var emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-        // Name Regex: only letters, spaces, and optional accents (adjust to match your locale)
-        var nameRegex = new Regex(@"^[\p{L}\s'-]+$");
-
-        if (!emailRegex.IsMatch(Email))
-        {
-            Snackbar.Add("Veuillez entrer une adresse email valide.", Severity.Error);
-            return;
-        }
-
-        if (!nameRegex.IsMatch(Nom))
-        {
-            Snackbar.Add("Le nom ne doit contenir que des lettres et aucun chiffre.", Severity.Error);
-            return;
-        }
-
-        EmailUserName EU = new EmailUserName
-            {
-                Email = Email,
-                Name = Nom
-            };
-
-        try
-        {
-            await NewsLetterService.CreateAsync(EU);
-            Snackbar.Add("Abonnement réussi !", Severity.Success);
-            Nom = string.Empty;
-            Email = string.Empty;
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add($"L'abonnement a échoué : {ex.Message}", Severity.Error);
-        }
-    }
-
+    
     void navigateToHome()
     {
         NavigationManager.NavigateTo("/");
