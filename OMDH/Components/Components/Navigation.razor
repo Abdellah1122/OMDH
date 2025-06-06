@@ -277,6 +277,73 @@
         .mobile-menu-close:hover {
             color: var(--danger-color);
         }
+/* Responsive breakpoints */
+@@media (max-width: 1200px) {
+    .Nv {
+        padding: 0.5rem 1rem;
+    }
+
+    .NavBtns {
+        gap: 1rem;
+    }
+
+    .Btnss {
+        font-size: 1rem;
+        padding: 0.4rem 0.6rem;
+    }
+}
+
+@@media (max-width: 992px) {
+    .NavBtns {
+        gap: 0.5rem;
+    }
+
+    .Btnss {
+        font-size: 0.95rem;
+        padding: 0.4rem 0.5rem;
+    }
+
+    .dropdown-content {
+        min-width: 180px;
+    }
+}
+
+@@media (max-width: 768px) {
+    .NavBtns {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .mobile-nav-overlay.active {
+        display: block;
+    }
+
+    .mobile-nav-menu {
+        display: block;
+    }
+
+    .Nv {
+        padding: 0.5rem 1rem;
+    }
+
+    /* Hide desktop dropdowns on mobile */
+    .dropdown:hover .dropdown-content {
+        display: none;
+    }
+}
+
+@@media (max-width: 480px) {
+    .logo-container img {
+        height: 35px;
+    }
+
+    .mobile-nav-menu {
+        width: 280px;
+    }
+}
 
 </style>
 
